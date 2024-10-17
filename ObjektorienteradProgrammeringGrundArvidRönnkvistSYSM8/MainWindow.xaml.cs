@@ -19,6 +19,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8
         public MainWindow()
         {
             InitializeComponent();
+            //MainWindowViewModel viewModel = new MainWindowViewModel();
+            //DataContext = viewModel;
         }
     }
 }

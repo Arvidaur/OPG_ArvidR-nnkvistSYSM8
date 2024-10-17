@@ -1,0 +1,21 @@
+﻿<Window x:Class="ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Background="#DC143C">
+            <Label Content="FitTrack" FontSize="80" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <Label Content="Username" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox x:Name="txtBoxUsername" HorizontalAlignment="Center" Width="200"/>
+            <Label Content="Password" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox x:Name="txtBoxPassword" HorizontalAlignment="Center" Width="200"/>
+            <Button x:Name="btnLogin" DataContext="{Binding Username}" Content="Logga in" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
+            <Button x:Name="btnForgottenPassword" Content="Glömt lösenord" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
+            <Button x:Name="btnRegister" Content="Registrera" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
+        </StackPanel>
+    </Grid>
+</Window>
