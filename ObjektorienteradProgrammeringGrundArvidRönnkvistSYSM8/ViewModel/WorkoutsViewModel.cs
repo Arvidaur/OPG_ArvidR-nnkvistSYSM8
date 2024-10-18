@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
-    internal class WorkoutDetails
+    internal class WorkoutsViewModel
     {
     }
 }

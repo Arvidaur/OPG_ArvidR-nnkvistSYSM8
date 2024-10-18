@@ -10,6 +10,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
     {
         //Method
 
+        //Constructor
+        public AdminUser(string username, string password) : base (username, password)
+        {
+            username = "admin";
+            password = "admin";
+        }
+
         public void ManageAllWorkouts()
         {
 

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,8 +20,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8
         public MainWindow()
         {
             InitializeComponent();
-            //MainWindowViewModel viewModel = new MainWindowViewModel();
+            //MainWindow viewModel = new MainWindow();
             //DataContext = viewModel;
+            DataContext = new MainWindowViewModel();
         }
     }
 }

@@ -12,7 +12,14 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
         public string Username { get; set; }
         public string Password { get; set; }
 
+        //Constructor
+        public Person(string username, string password)
+        {
+            this.Username = username;  
+            this.Password = password;
+        }
+
         //Method
-        public abstract void SignIn();
+        public abstract void SignIn(string Username, string Password);
     }
 }
