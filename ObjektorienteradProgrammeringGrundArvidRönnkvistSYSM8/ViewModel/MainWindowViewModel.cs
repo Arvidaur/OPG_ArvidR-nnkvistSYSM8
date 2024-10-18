@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private string _username;
         private string _password;
@@ -51,18 +51,30 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void Login(object parameter)
         {
-            // Replace with your user validation logic
-            if (Username == "BigArvid69" && Password == "muscles")
-            {
-                // Login successful logic
-                System.Windows.MessageBox.Show("Login successful!");
 
+            // Check if user exists with the correct username and password
+            var isValidUser = User.Users.Any(user => user.Username == Username && user.Password == Password);
+
+            if (isValidUser)
+            {
+                System.Windows.MessageBox.Show("Login successful!");
             }
             else
             {
-                // Login failure logic
                 System.Windows.MessageBox.Show("Invalid username or password.");
             }
+            //// Replace with your user validation logic
+            //if (Username == "BigArvid69" && Password == "muscles")
+            //{
+            //    // Login successful logic
+            //    System.Windows.MessageBox.Show("Login successful!");
+
+            //}
+            //else
+            //{
+            //    // Login failure logic
+            //    System.Windows.MessageBox.Show("Invalid username or password.");
+            //}
         }
 
         private void ForgotPassword(object parameter)
@@ -77,10 +89,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             userDetailWindow.ShowDialog();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }
