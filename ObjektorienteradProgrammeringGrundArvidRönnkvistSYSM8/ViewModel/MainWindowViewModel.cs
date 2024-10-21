@@ -49,6 +49,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             RegisterNewCommand = new RelayCommand(Register);
         }
 
+        //Mehtod when uses tries to log into the app, checks if a user with username and password exists and logs in if true
         private void Login(object parameter)
         {
 
@@ -64,7 +65,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             {
                 System.Windows.MessageBox.Show("Invalid username or password.");
             }
-            //// Replace with your user validation logic
+            
             //if (Username == "BigArvid69" && Password == "muscles")
             //{
             //    // Login successful logic

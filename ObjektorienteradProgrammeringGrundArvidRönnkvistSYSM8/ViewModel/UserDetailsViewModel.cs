@@ -94,7 +94,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             bool userExists = User.Users.Any(user => user.Username == Username);
             if (userExists)
             {
-                MessageBox.Show("There already exists a user with this name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("There already exists a user with this username.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else if (string.IsNullOrWhiteSpace(Username))
