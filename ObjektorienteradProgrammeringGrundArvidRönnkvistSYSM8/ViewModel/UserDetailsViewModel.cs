@@ -91,32 +91,38 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void createUser(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett. !!!!!Ska implementera där jag ser till att användarnamnet inte redan existerar
         {
-            if (string.IsNullOrWhiteSpace(Username))
+            bool userExists = User.Users.Any(user => user.Username == Username);
+            if (userExists)
+            {
+                MessageBox.Show("There already exists a user with this name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(Username))
             {
                 MessageBox.Show("Username cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Password))
+            else if (string.IsNullOrWhiteSpace(Password))
             {
                 MessageBox.Show("Password cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (Password != ConfirmPassword)
+            else if (Password != ConfirmPassword)
             {
                 MessageBox.Show("Password doesn't match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Country))
+            else if (string.IsNullOrWhiteSpace(Country))
             {
                 MessageBox.Show("Country cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(SecurityQuestion))
+            else if (string.IsNullOrWhiteSpace(SecurityQuestion))
             {
                 MessageBox.Show("Security Question cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(SecurityAnswer))
+            else if (string.IsNullOrWhiteSpace(SecurityAnswer))
             {
                 MessageBox.Show("Security Answer cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -134,7 +140,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             User.Users.Add(newUser);
 
             MessageBox.Show($"User has been created! Username: {Username}. Password: {Password}. Country: {Country}. Security question: {SecurityQuestion}. Security answer: {SecurityAnswer}. " ,
-                "User Created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                "User Created", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void CancelCommand(object parameter)

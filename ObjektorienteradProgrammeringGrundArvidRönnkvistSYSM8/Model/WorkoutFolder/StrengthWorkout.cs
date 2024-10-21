@@ -8,7 +8,18 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
 {
     class StrengthWorkout : Workout
     {
+
+        //Properties
         public int Repetitions { get; set; }
+
+        //Contructor
+        public StrengthWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration,  int CaloriesBurned, string Notes, int Repetitions) 
+            : base(Date, TypeOfWorkOut, Duration, CaloriesBurned, Notes)
+        {
+            this.Repetitions = Repetitions;
+
+        }
+
         public override int CalculateCaloriesBurned()
         {
             throw new NotImplementedException();

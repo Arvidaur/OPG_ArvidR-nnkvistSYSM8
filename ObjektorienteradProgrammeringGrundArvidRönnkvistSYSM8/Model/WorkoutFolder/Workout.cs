@@ -15,6 +15,17 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
         public int CaloriesBurned { get; set; }
         public string Notes { get; set; }
 
+        //Contructor
+        public Workout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration,  int CaloriesBurned, string Notes)
+        {
+            this.Date = Date;
+            this.TypeOfWorkOut = TypeOfWorkOut;
+            this.Duration = Duration;
+            this.CaloriesBurned = CaloriesBurned;
+            this.Notes = Notes;
+
+        }
+
         //Method
         public abstract int CalculateCaloriesBurned();
 

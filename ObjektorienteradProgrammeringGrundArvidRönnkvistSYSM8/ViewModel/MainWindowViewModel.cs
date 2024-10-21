@@ -57,7 +57,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
             if (isValidUser)
             {
-                System.Windows.MessageBox.Show("Login successful!");
+                var workoutsWindow = new WorkoutsWindow(); //Creating an instance of UserDetailWindow
+                workoutsWindow.ShowDialog();
             }
             else
             {
