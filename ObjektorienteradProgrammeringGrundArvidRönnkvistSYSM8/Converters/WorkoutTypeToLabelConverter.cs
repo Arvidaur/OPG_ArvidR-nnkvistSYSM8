@@ -16,8 +16,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Converters
             {
                 return workoutType switch
                 {
-                    "Strength" => "Strength Training Details",
-                    "Cardio" => "Cardio Workout Details",
+                    "Strength" => "Repetitions",
+                    "Cardio" => "Distance",
                     _ => "Select a workout type"
                 };
             }

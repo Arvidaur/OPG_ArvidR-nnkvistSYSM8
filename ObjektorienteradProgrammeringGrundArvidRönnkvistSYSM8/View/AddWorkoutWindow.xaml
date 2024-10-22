@@ -18,10 +18,11 @@
             <Label Content="Add Workout!" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
             <ComboBox x:Name="WorkoutTypeComboBox" Width="200" 
-                      SelectedItem="{Binding WorkoutType, Mode=TwoWay}" 
-                      Background="#D3D3D3">
-                <ComboBoxItem>Strength</ComboBoxItem>
-                <ComboBoxItem>Cardio</ComboBoxItem>
+                      SelectedValue="{Binding WorkoutType, Mode=TwoWay}" 
+                      SelectedValuePath="Content"
+                        Background="#D3D3D3">
+                <ComboBoxItem Content="Strength"/>
+                <ComboBoxItem Content="Cardio"/>
             </ComboBox>
 
             <Label Content="Workout duration" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
@@ -31,13 +32,13 @@
             <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxCalories" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
             <!--Dynamic label depending on workouttype-->
-            <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}, Mode=TwoWay}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding RepDis, UpdateSourceTrigger=PropertyChanged}" x:Name="txtRepOrDis" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
             <Label Content="Notes" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxNotes" HorizontalAlignment="Center" Width="200" Height="150" Background="#D3D3D3"/>
 
-            <Button x:Name="btnAddWorkout" Command="{Binding AddWorkout}" Content="Spara" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+            <Button x:Name="btnAddWorkout" Command="{Binding WorkoutAdd}" Content="Spara" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
             <Button x:Name="btnReturn" Command="{Binding Return}" Content="Tillbaka" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
 
         </StackPanel>
