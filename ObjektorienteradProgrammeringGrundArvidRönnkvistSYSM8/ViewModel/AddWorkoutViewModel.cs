@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class AddWorkoutViewModel : ViewModelBase
     {
-        public DateTime Date = DateTime.Now;
+        private DateTime Date = DateTime.Now;
         private string workoutType;
         private TimeSpan duration;
         private int caloriesBurned;
-        private string notes;
+        private string notes = "";
         
-        private int repetitions;    //Ifall användaren vill logga ett styrkepass(Strength)
-        private int distance;   //Ifall användaren vill logga ett fyspass(Cardio)
+        private int repDis;    //Repetitions / Distance beroende på om användaren vill logga ett fys eller styrkepass
+        //private int distance;  
         
 
         public string WorkoutType
@@ -60,6 +61,19 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Notes));
             }
         }
+
+        public int RepDis
+        {
+            get => repDis;
+            set
+            {
+                repDis = value;
+                OnPropertyChanged(nameof(RepDis));
+            }
+        }
+
+        
+
         public ICommand WorkoutAdd { get; }
         public ICommand ReturnToPrevios { get; }
     
@@ -71,9 +85,26 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public void AddWorkout(object parameter)
         {
+            if (string.IsNullOrWhiteSpace(workoutType)) //If no workout type is selected
+            {
+                return;
+            }
             if (workoutType == "Strength")
             {
-               StrengthWorkout workout = new StrengthWorkout(Date, WorkoutType, Duration, CaloriesBurned, ) 
+                StrengthWorkout workout = new StrengthWorkout(Date, WorkoutType, Duration, CaloriesBurned, Notes, RepDis);
+                MessageBox.Show($"Workout added!", "Workout added!");
+                ClearFields();
+            }
+            else if (workoutType == "Cardio")
+            {                
+                CardioWorkout workout = new CardioWorkout(Date, WorkoutType, Duration, CaloriesBurned, Notes, RepDis);
+                MessageBox.Show($"Workout added!", "Workout added!");
+                ClearFields();
+            }
+            else
+            {
+                MessageBox.Show("Error", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
         }
@@ -82,6 +113,16 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         {
 
         }
+
+        private void ClearFields()
+        {
+            WorkoutType = string.Empty;
+            Duration = TimeSpan.Zero;
+            CaloriesBurned = 0;
+            Notes = string.Empty;
+            RepDis = 0;
+        }
+
     }
 
 

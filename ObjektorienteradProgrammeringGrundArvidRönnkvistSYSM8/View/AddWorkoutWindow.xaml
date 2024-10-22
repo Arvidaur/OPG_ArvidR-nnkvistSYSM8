@@ -4,13 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View"
+        xmlns:local1="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Converters"
         mc:Ignorable="d"
         Title="AddWorkoutWindow" Height="450" Width="800">
+    
+    <Window.Resources>
+        <!-- Register the converter in XAML resources -->
+        <local1:WorkoutTypeToLabelConverter x:Key="WorkoutTypeToLabelConverter"/>
+    </Window.Resources>
+    
     <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="Add Workout!" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
-            <ComboBox x:Name="WorkoutTypeComboBox" Width="200" Text="Workout Type" SelectedItem="{Binding SelectedWorkoutType, Mode=TwoWay}" Background="#D3D3D3">
+            <ComboBox x:Name="WorkoutTypeComboBox" Width="200" 
+                      SelectedItem="{Binding WorkoutType, Mode=TwoWay}" 
+                      Background="#D3D3D3">
                 <ComboBoxItem>Strength</ComboBoxItem>
                 <ComboBoxItem>Cardio</ComboBoxItem>
             </ComboBox>
@@ -21,7 +30,8 @@
             <Label Content="Calories burned" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxCalories" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
-            <Label Content="" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <!--Dynamic label depending on workouttype-->
+            <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding RepDis, UpdateSourceTrigger=PropertyChanged}" x:Name="txtRepOrDis" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
             <Label Content="Notes" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
@@ -29,10 +39,6 @@
 
             <Button x:Name="btnAddWorkout" Command="{Binding AddWorkout}" Content="Spara" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
             <Button x:Name="btnReturn" Command="{Binding Return}" Content="Tillbaka" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
-
-
-
-
 
         </StackPanel>
     </Grid>
