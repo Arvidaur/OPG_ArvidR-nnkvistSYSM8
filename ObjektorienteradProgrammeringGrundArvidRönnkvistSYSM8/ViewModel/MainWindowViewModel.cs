@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
@@ -49,35 +52,44 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             RegisterNewCommand = new RelayCommand(Register);
         }
 
-        //Mehtod when uses tries to log into the app, checks if a user with username and password exists and logs in if true
+        //Method when uses tries to log into the app, checks if a user with username and password exists and logs in if true
         private void Login(object parameter)
         {
-
+            bool isValidUser;
             // Check if user exists with the correct username and password
-            var isValidUser = User.Users.Any(user => user.Username == Username && user.Password == Password);
+            try
+            {
+                if (Password == null || Username == null)
+                {
+                    isValidUser = false;
+                    MessageBox.Show("Empty fields", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {                    
+                    isValidUser = User.Users.Any(user => user.Username == Username && user.Password == Password);                 
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There are no registered users", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
 
             if (isValidUser)
             {
+                User signInUser = new User(Username, Password); //Creates an object used with the sign in method to make sure that the user logging in is the active user 
+                signInUser.SignIn(Username, Password);
                 var workoutsWindow = new WorkoutsWindow(); //Creating an instance of UserDetailWindow
-                workoutsWindow.ShowDialog();
+                workoutsWindow.ShowDialog();               
             }
             else
             {
                 System.Windows.MessageBox.Show("Invalid username or password.");
             }
-            
-            //if (Username == "BigArvid69" && Password == "muscles")
-            //{
-            //    // Login successful logic
-            //    System.Windows.MessageBox.Show("Login successful!");
-
-            //}
-            //else
-            //{
-            //    // Login failure logic
-            //    System.Windows.MessageBox.Show("Invalid username or password.");
-            //}
         }
+
 
         private void ForgotPassword(object parameter)
         {
@@ -87,10 +99,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private void Register(object parameter)
         {
             
-            var userDetailWindow = new UserDetailsWindow(); //Creating an instance of UserDetailWindow
-            userDetailWindow.ShowDialog();
-        }
-
-        
+            var registerWindow = new Register(); //Creating an instance of UserDetailWindow
+            registerWindow.ShowDialog();
+        }        
     }
 }

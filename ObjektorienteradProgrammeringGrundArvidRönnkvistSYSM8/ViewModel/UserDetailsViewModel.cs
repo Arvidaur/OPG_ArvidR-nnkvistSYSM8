@@ -1,4 +1,5 @@
 ﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFolder;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.MVVM;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View;
 using System;
@@ -135,9 +136,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void SaveUserDetails(object parameter)
         {
-            User newUser = new User(Username, Password, Country, SecurityQuestion, SecurityAnswer);
+            //User newUser = new User(Username, Password, Country, SecurityQuestion, SecurityAnswer);
 
-            User.Users.Add(newUser);
+            //User.Users.Add(newUser);
+            
+            //List<StrengthWorkout> strengthWorkouts = new List<StrengthWorkout>();
 
             MessageBox.Show($"User has been created! Username: {Username}. Password: {Password}. Country: {Country}. Security question: {SecurityQuestion}. Security answer: {SecurityAnswer}. " ,
                 "User Created", MessageBoxButton.OK, MessageBoxImage.Information);

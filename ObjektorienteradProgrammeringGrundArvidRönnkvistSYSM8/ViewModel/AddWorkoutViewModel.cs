@@ -76,6 +76,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public ICommand WorkoutAdd { get; }
         public ICommand ReturnToPrevios { get; }
+
+        //Workoutproperty to store the result
+        public Workout Workout { get; private set; }
     
         public AddWorkoutViewModel()
         {
@@ -92,13 +95,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
             if (workoutType == "Strength")
             {
-                StrengthWorkout workout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+                Workout workout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Repetitions: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearFields();
             }
             else if (workoutType == "Cardio")
             {                
-                CardioWorkout workout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+                Workout workout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Distance: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearFields();
             }
@@ -107,7 +110,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 MessageBox.Show("No workouttype found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
         }
 
         public void Return(object parameter)
@@ -123,8 +125,5 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             Notes = string.Empty;
             RepDis = 0;
         }
-
     }
-
-
 }

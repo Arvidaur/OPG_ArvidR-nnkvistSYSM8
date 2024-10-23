@@ -29,6 +29,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
 
         List<StrengthWorkout> strengthWorkouts = new List<StrengthWorkout>();
 
+        
+
         public override int CalculateCaloriesBurned()
         {
             throw new NotImplementedException();

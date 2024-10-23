@@ -25,5 +25,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
             InitializeComponent();
             DataContext = new AddWorkoutViewModel();
         }
+
     }
 }
