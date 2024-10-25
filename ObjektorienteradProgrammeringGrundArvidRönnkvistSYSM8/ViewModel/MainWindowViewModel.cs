@@ -79,9 +79,18 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
             if (isValidUser)
             {
-                User signInUser = new User(Username, Password); //Creates an object used with the sign in method to make sure that the user logging in is the active user 
-                signInUser.SignIn(Username, Password);
+                var user = User.Users.First(user => user.Username == Username && user.Password == Password);
+                User.ActiveUser = user;
+
+                WorkoutsViewModel workoutsViewModel = new WorkoutsViewModel();
+                workoutsViewModel.OnUserLogin();    //Set the log in message
+                
+                //user.SignIn(Username, Password);
+                
                 var workoutsWindow = new WorkoutsWindow(); //Creating an instance of UserDetailWindow
+
+                workoutsWindow.DataContext = workoutsViewModel;
+                
                 workoutsWindow.ShowDialog();               
             }
             else

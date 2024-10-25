@@ -1,4 +1,5 @@
-﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
+﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFolder;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.MVVM;
 using System;
 using System.Collections.Generic;
@@ -83,33 +84,49 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public AddWorkoutViewModel()
         {
             WorkoutAdd = new RelayCommand(AddWorkout);
+
             ReturnToPrevios = new RelayCommand(Return);
         }
-
+        public event Action<Workout> WorkoutAdded;
         public void AddWorkout(object parameter)
         {
-            MessageBox.Show("Knappen funkar");
+            
             if (string.IsNullOrWhiteSpace(workoutType)) //If no workout type is selected
             {
                 return;
             }
+
+            Workout workout;
+
             if (workoutType == "Strength")
             {
-                Workout workout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+                
+                workout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Repetitions: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
-                ClearFields();
             }
             else if (workoutType == "Cardio")
             {                
-                Workout workout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+                workout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Distance: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
-                ClearFields();
             }
             else
             {
                 MessageBox.Show("No workouttype found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            // Check if ActiveUser exists and initialize Workouts list if necessary
+            if (User.ActiveUser != null)
+            {              
+                User.ActiveUser.Workouts.Add(workout); // Add workout to active user's list
+                WorkoutAdded?.Invoke(workout);  //Notify that the workout was created
+            }
+            else
+            {
+                MessageBox.Show("No active user found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }           
+            ClearFields();
         }
 
         public void Return(object parameter)

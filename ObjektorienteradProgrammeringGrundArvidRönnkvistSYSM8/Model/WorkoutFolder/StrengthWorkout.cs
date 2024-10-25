@@ -10,20 +10,20 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
     {
 
         //Properties
-        public int Repetitions { get; set; }
+        public int RepDis { get; set; }
 
         //Contructor
-        public StrengthWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration,  int CaloriesBurned, string Notes, int Repetitions) 
+        public StrengthWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration,  int CaloriesBurned, string Notes, int RepDis) 
             : base(Date, TypeOfWorkOut, Duration, CaloriesBurned, Notes)
         {
-            this.Repetitions = Repetitions;
+            this.RepDis = RepDis;
 
         }
         //Konstructor utan notes då det är frivilligt
         public StrengthWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration, int CaloriesBurned, int Repetitions)
             : base(Date, TypeOfWorkOut, Duration, CaloriesBurned)
         {
-            this.Repetitions = Repetitions;
+            this.RepDis = RepDis;
 
         }
 

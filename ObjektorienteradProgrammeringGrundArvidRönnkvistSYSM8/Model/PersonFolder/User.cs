@@ -1,4 +1,5 @@
 ﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,15 +12,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
     public class User : Person
     {
         //Properties
-        public static User ActiveUser {  get; private set; }
+        public static User ActiveUser {  get; set; }
         public string Country { get; set; }
         public string SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
-        public List<Workout> Workouts { get; set; }
+        public List<Workout> Workouts { get; set; } = new List<Workout>();
         public static List<User> Users { get; set; } = new List<User>();
 
         //Constructor
-        public User(string username, string password, string Country, string SecurityQuestion, string SecurityAnswer, List<Workout> Workouts) : base(username, password)
+        public User(string username, string password, string Country, string SecurityQuestion, string SecurityAnswer, List<Workout> Workout) : base(username, password)
         {
             this.Country = Country;
             this.SecurityQuestion = SecurityQuestion;
@@ -38,18 +39,16 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
         //Methods
         public override void SignIn(string Username, string Password)   //Tar username och passsword som argument från inloggningsfönstret
         {
-            var user = Users.FirstOrDefault(u => u.Username == Username && u.Password == Password); //Ser vilken användare som loggas in 
-            if (user != null)
-            {
-                ActiveUser = user;  //Tilldelar värdet ActiveUser till användaren som är inloggad
-            }
+            //var user = Users.FirstOrDefault(u => u.Username == Username && u.Password == Password); //Ser vilken användare som loggas in 
+            //if (user != null)
+            //{
+            //    ActiveUser = user;  //Tilldelar värdet ActiveUser till användaren som är inloggad             
+            //}
         }
 
         public void ResetPassword(string SecurityAnswer)
         {
 
-        }
-
-         
+        }         
     }
 }
