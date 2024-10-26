@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -15,6 +16,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class WorkoutsViewModel : ViewModelBase
     {
+        public Action CloseAction { get; set; }
         private string _welcomeMessage;
         public string WelcomeMessage
         {
@@ -47,6 +49,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand RemoveWorkout { get; }
         public ICommand DetailsWorkout { get; }
         public ICommand EditUser { get; }
+        public ICommand Logout { get; }
 
         public WorkoutsViewModel()
         {
@@ -55,9 +58,17 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             RemoveWorkout = new RelayCommand(WorkoutRemove);
             DetailsWorkout = new RelayCommand(WorkoutDetails);
             EditUser = new RelayCommand(UserEdit);
+            Logout = new RelayCommand(LogoutUser);
             
 
             LoadUserWorkouts();
+        }
+
+        private void LogoutUser(object obj)
+        {
+            User.ActiveUser = null;
+            MessageBox.Show("Försöker stänga");
+            Application.Current.Dispatcher.Invoke(() => CloseAction?.Invoke());
         }
 
         public void WorkoutAdd(object parameter)
