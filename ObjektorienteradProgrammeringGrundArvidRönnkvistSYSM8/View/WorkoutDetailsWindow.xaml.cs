@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,12 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public WorkoutDetailsWindow()
         {
             InitializeComponent();
+            DataContext = new WorkoutDetailsViewModel();
+        }
+
+        private void lstBoxWorkouts_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
         }
     }
 }

@@ -18,7 +18,8 @@
                 <Button x:Name="btnLoggaUt" Command="{Binding Logout}" Content="Logga ut" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
             </WrapPanel>
 
-            <ListBox x:Name="lstBoxWorkouts" Width="600" Height="200" ItemsSource="{Binding Workouts}" SelectedItem="{Binding Selected}">
+            <Label Content="Dina träningspass" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <ListBox x:Name="lstBoxWorkouts" Width="600" Height="300" ItemsSource="{Binding Workouts}" SelectedItem="{Binding Selected}" ScrollBar.Scroll="lstBoxWorkouts_Scroll">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

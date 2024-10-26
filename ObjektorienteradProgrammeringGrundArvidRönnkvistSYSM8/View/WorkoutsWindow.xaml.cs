@@ -25,5 +25,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
             InitializeComponent();
             DataContext = new WorkoutsViewModel();
         }
+
+        private void lstBoxWorkouts_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
     }
 }
