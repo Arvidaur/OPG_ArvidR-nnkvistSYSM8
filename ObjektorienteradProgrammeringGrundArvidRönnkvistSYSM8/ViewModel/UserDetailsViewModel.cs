@@ -16,15 +16,27 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class UserDetailsViewModel : ViewModelBase
     {
-        private string username, password, confirmPassword, country, securityQuestion, securityAnswer;
+        //private string username, password, confirmPassword, country, securityQuestion, securityAnswer;
+        
+        private string CurrentUsername = User.ActiveUser.Username;  //Sparar värdet för det gamla användarnamet ifall användaren inte vill byta namn 
+        //Fälten ska bestå av de nuvarnde värdena den aktiva användaren har
+        private string username = User.ActiveUser.Username;
+        private string password = User.ActiveUser.Password;
+        private string confirmPassword = User.ActiveUser.Password;
+        private string country = User.ActiveUser.Country;
+        private string securityQuestion = User.ActiveUser.SecurityQuestion;
+        private string securityAnswer = User.ActiveUser.SecurityAnswer;
 
         public string Username
         {
-            get => username; 
+            get => username;
             set
             {
-                username = value;
-                OnPropertyChanged(nameof(Username));
+                if (username != value)
+                {
+                    username = value;
+                    OnPropertyChanged(nameof(Username));
+                }
             }
         }
 
@@ -33,17 +45,23 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             get => password;
             set
             {
-                password = value;
-                OnPropertyChanged(nameof(Password));
+                if (password != value)
+                {
+                    password = value;
+                    OnPropertyChanged(nameof(Password));
+                }
             }
         }
         public string ConfirmPassword
         {
             get => confirmPassword;
-            set
+            set               
             {
-                confirmPassword = value;
-                OnPropertyChanged(nameof(ConfirmPassword));
+                if (confirmPassword != value)
+                {
+                    confirmPassword = value;
+                    OnPropertyChanged(nameof(ConfirmPassword));
+                }
             }
         }
 
@@ -52,8 +70,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             get => country;
             set
             {
-                country = value;
-                OnPropertyChanged(nameof(Country));
+                if (country != value)
+                { 
+                    country = value;
+                    OnPropertyChanged(nameof(Country));
+                }
             }
         }
 
@@ -62,8 +83,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             get => securityQuestion;
             set
             {
-                securityQuestion = value;
-                OnPropertyChanged(nameof(SecurityQuestion));
+                if (securityQuestion != value)
+                {
+                    securityQuestion = value;
+                    OnPropertyChanged(nameof(SecurityQuestion));
+                }
             }
         }
 
@@ -72,28 +96,32 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             get => securityAnswer;
             set
             {
-                securityAnswer = value;
-                OnPropertyChanged(nameof(SecurityAnswer));
+                if (securityAnswer != value)
+                {
+                    securityAnswer = value;
+                    OnPropertyChanged(nameof(SecurityAnswer));
+                }
             }
         }
 
-        public ICommand CreateUser { get; }
+        public ICommand SaveChanges { get; }
         public ICommand Cancel {  get; }
 
         public event EventHandler CloseRequested;
         public UserDetailsViewModel()
         {
-            CreateUser = new RelayCommand(createUser);
+            SaveChanges = new RelayCommand(SaveUserChanges);
             Cancel = new RelayCommand(CancelCommand);
         }
 
 
 
 
-        private void createUser(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett. !!!!!Ska implementera där jag ser till att användarnamnet inte redan existerar
+        private void SaveUserChanges(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett. !!!!!Ska implementera där jag ser till att användarnamnet inte redan existerar
         {
-            bool userExists = User.Users.Any(user => user.Username == Username);
-            if (userExists)
+            bool sameUsername = CurrentUsername == Username;
+            bool userExists = User.Users.Any(user => user.Username == Username && user.Username != CurrentUsername);    //Om användaren inte bytt sitt användarnamn går vi vidare. Om det finns en användare med samma användarnamn returnar vi
+            if (userExists)  
             {
                 MessageBox.Show("There already exists a user with this username.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -142,7 +170,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             
             //List<StrengthWorkout> strengthWorkouts = new List<StrengthWorkout>();
 
-            MessageBox.Show($"User has been created! Username: {Username}. Password: {Password}. Country: {Country}. Security question: {SecurityQuestion}. Security answer: {SecurityAnswer}. " ,
+            MessageBox.Show($"User has been edited! Username: {Username}. Password: {Password}. Country: {Country}. Security question: {SecurityQuestion}. Security answer: {SecurityAnswer}. " ,
                 "User Created", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

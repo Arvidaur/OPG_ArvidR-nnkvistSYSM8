@@ -129,7 +129,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         }
         public void UserEdit(object parameter)
         {
+            // Create an instance of the workoutDetailsWindow
+            var userDetailsWindow = new UserDetailsWindow();
 
+            // Open the workoutDetailsWindow as a dialog
+            userDetailsWindow.ShowDialog();
         }
     }
 }

@@ -18,12 +18,27 @@
 
             <Label Content="Confirm Password" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxConfirmPassword" HorizontalAlignment="Center" Width="200"  />
-
+            
             <Label Content="Country of Residence" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Country, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxCountry" HorizontalAlignment="Center" Width="200"  />
+            <ComboBox x:Name="CountryComboBox" Width="200" 
+           SelectedValue="{Binding Country, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+           SelectedValuePath="Content"
+             Background="#D3D3D3">
+                <ComboBoxItem Content="Sverige"/>
+                <ComboBoxItem Content="Danmark"/>
+                <ComboBoxItem Content="Norge"/>
+            </ComboBox>
 
             <Label Content="Säkerhetsfråga" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtSecurityQuestion" HorizontalAlignment="Center" Width="200"  />
+            <ComboBox x:Name="SecurityQuestionComboBox" Width="200" 
+            SelectedValue="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+            SelectedValuePath="Content"
+            Background="#D3D3D3">
+                <ComboBoxItem Content="Vad heter din mamma i mellannamn?"/>
+                <ComboBoxItem Content="Vad heter ditt husdjur?"/>
+                <ComboBoxItem Content="Vad är ditt favoritminne från när du var liten?"/>
+            </ComboBox>
+            
 
             <Label Content="Säkerhetsfråga Svar" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding SecurityAnswer, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxSecurityAnswer" HorizontalAlignment="Center" Width="200"  />

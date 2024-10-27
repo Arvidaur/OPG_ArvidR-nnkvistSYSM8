@@ -8,7 +8,7 @@
         Title="UserDetailsWindow" Height="450" Width="800">
     <Grid Background="#DC143C">
         <StackPanel>
-            <Label Content="Registrera dig hos FitTrack!" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <Label Content="Redigera profil" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             
             <Label Content="Username" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxUsername" HorizontalAlignment="Center" Width="200"/>
@@ -20,15 +20,29 @@
             <TextBox Text="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxConfirmPassword" HorizontalAlignment="Center" Width="200"  />
 
             <Label Content="Country of Residence" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Country, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxCountry" HorizontalAlignment="Center" Width="200"  />
+            <ComboBox x:Name="CountryComboBox" Width="200" 
+SelectedValue="{Binding Country, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+SelectedValuePath="Content"
+  Background="#D3D3D3">
+                <ComboBoxItem Content="Sverige"/>
+                <ComboBoxItem Content="Danmark"/>
+                <ComboBoxItem Content="Norge"/>
+            </ComboBox>
 
             <Label Content="Säkerhetsfråga" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtSecurityQuestion" HorizontalAlignment="Center" Width="200"  />
+            <ComboBox x:Name="SecurityQuestionComboBox" Width="200" 
+            SelectedValue="{Binding SecurityQuestion, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+            SelectedValuePath="Content"
+            Background="#D3D3D3">
+                <ComboBoxItem Content="Vad heter din mamma i mellannamn?"/>
+                <ComboBoxItem Content="Vad heter ditt husdjur?"/>
+                <ComboBoxItem Content="Vad är ditt favoritminne från när du var liten?"/>
+            </ComboBox>
 
             <Label Content="Säkerhetsfråga Svar" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding SecurityAnswer, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxSecurityAnswer" HorizontalAlignment="Center" Width="200"  />
 
-            <Button x:Name="btnCreateUser" Command="{Binding CreateUser}" Content="Skapa användare" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
+            <Button x:Name="btnSaveChanges" Command="{Binding SaveChanges}" Content="Spara ändringar" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
             <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Avbryt" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
         </StackPanel>
     </Grid>
