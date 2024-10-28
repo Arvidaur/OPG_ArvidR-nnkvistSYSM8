@@ -23,9 +23,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public WorkoutsWindow()
         {
             InitializeComponent();
-            DataContext = new WorkoutsViewModel();
-
-            
+            var viewModel = new WorkoutsViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel;
         }
 
 

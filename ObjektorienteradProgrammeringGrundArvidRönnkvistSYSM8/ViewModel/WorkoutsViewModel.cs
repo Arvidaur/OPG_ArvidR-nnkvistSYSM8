@@ -68,13 +68,19 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         {
             //AdminUser.IsAdmin = false;    //Admin ska vara false vare sig det var en admin som var inloggad eller inte 
             User.ActiveUser = null;     //Det är ska inte finnas någon active user när användaren loggar ut
-            MessageBox.Show("Försöker stänga");
-            Application.Current.Dispatcher.Invoke(() => CloseAction?.Invoke());
+            
+            
+            var mainWindow = new MainWindow(); //Creating an instance of UserDetailWindow
+            mainWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
+
+        
+
+    
 
         public void WorkoutAdd(object parameter)
         {
-          
             // Create an instance of the AddWorkoutWindow
             var addWorkoutWindow = new AddWorkoutWindow();
 
@@ -84,8 +90,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             // Subscribe to the WorkoutAdded event
             addWorkoutViewModel.WorkoutAdded += (workout) => Workouts.Add(workout);
 
-            // Open the AddWorkoutWindow as a dialog
-            addWorkoutWindow.ShowDialog();
+            addWorkoutWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
 
         // Method to load workouts for the active user
@@ -122,19 +128,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
        
         public void WorkoutDetails(object parameter)
         {
-            // Create an instance of the workoutDetailsWindow
             var workoutDetailsWindow = new WorkoutDetailsWindow();
-
-            // Open the workoutDetailsWindow as a dialog
-            workoutDetailsWindow.ShowDialog();
+            workoutDetailsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
         public void UserEdit(object parameter)
         {
-            // Create an instance of the workoutDetailsWindow
             var userDetailsWindow = new UserDetailsWindow();
-
-            // Open the workoutDetailsWindow as a dialog
-            userDetailsWindow.ShowDialog();
+            userDetailsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
     }
 }

@@ -23,13 +23,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public UserDetailsWindow()
         {
             InitializeComponent();
-            var viewModel = new UserDetailsViewModel();
-            viewModel.CloseRequested += ViewModel_CloseRequested;
-            DataContext = new UserDetailsViewModel();
+            var viewModel = new UserDetailsViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel;
         }
-        private void ViewModel_CloseRequested(object sender, EventArgs e)
-        {
-            this.Close(); // Close the window
-        }
-    }
+    }   
 }

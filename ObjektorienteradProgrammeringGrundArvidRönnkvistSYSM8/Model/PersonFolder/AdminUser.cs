@@ -13,11 +13,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
         public bool IsAdmin;
 
         //Constructor
-        public AdminUser(string username, string password, bool IsAdmin) : base (username, password)
+        public AdminUser(string username, string password) : base (username, password)
         {
-            username = "admin";
-            password = "admin";
-            this.IsAdmin = IsAdmin;
+
         }
 
         //Method

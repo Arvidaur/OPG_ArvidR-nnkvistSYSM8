@@ -16,9 +16,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class UserDetailsViewModel : ViewModelBase
     {
-        //private string username, password, confirmPassword, country, securityQuestion, securityAnswer;
-        
+        public Action CloseAction { get; set; }
+
         private string CurrentUsername = User.ActiveUser.Username;  //Sparar värdet för det gamla användarnamet ifall användaren inte vill byta namn 
+        
         //Fälten ska bestå av de nuvarnde värdena den aktiva användaren har
         private string username = User.ActiveUser.Username;
         private string password = User.ActiveUser.Password;
@@ -107,7 +108,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand SaveChanges { get; }
         public ICommand Cancel {  get; }
 
-        public event EventHandler CloseRequested;
         public UserDetailsViewModel()
         {
             SaveChanges = new RelayCommand(SaveUserChanges);
@@ -139,6 +139,26 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             else if (Password != ConfirmPassword)
             {
                 MessageBox.Show("Password doesn't match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (Password.Length < 8)
+            {
+                MessageBox.Show("Password has to be at least 8 characters long", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (!Password.Any(char.IsUpper))
+            {
+                MessageBox.Show("Password has to contain one upper case letter", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (!Password.Any(char.IsLower))
+            {
+                MessageBox.Show("Password has to contain at least one lowercase letter", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (!Password.Any(char.IsDigit))
+            {
+                MessageBox.Show("Password has to contain at least one digit", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else if (string.IsNullOrWhiteSpace(Country))
@@ -176,8 +196,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void CancelCommand(object parameter)
         {
-            
-            CloseRequested?.Invoke(this, EventArgs.Empty);
+
+            var workoutsWindow = new WorkoutsWindow(); //Creating an instance of WorkoutsWindow
+            workoutsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
     }
 }

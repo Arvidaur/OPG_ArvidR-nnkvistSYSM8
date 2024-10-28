@@ -23,7 +23,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public WorkoutDetailsWindow()
         {
             InitializeComponent();
-            DataContext = new WorkoutDetailsViewModel();
+            var viewModel = new WorkoutDetailsViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel; InitializeComponent();       
         }
 
         private void lstBoxWorkouts_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)

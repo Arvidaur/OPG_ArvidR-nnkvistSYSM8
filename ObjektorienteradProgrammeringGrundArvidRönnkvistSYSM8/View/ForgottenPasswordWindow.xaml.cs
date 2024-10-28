@@ -23,7 +23,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public ForgottenPasswordWindow()
         {
             InitializeComponent();
-            DataContext = new ForgottenPasswordViewModel();
+            var viewModel = new ForgottenPasswordViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel;
         }
     }
 }

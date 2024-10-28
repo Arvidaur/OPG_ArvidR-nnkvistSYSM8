@@ -23,7 +23,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
         public Register()
         {
             InitializeComponent();
-            DataContext = new RegisterViewModel();
+            var viewModel = new RegisterViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel;
         }
     }
 }

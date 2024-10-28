@@ -20,9 +20,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8
         public MainWindow()
         {
             InitializeComponent();
-            //MainWindow viewModel = new MainWindow();
-            //DataContext = viewModel;
-            DataContext = new MainWindowViewModel();
+            var viewModel = new MainWindowViewModel
+            {
+                CloseAction = this.Close
+            };
+            DataContext = viewModel;
         }
     }
 }

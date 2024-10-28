@@ -1,6 +1,7 @@
 ﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.MVVM;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class AddWorkoutViewModel : ViewModelBase
     {
+        public Action CloseAction { get; set; }
         private DateTime Date = DateTime.Now;
         private string workoutType;
         private TimeSpan duration;
@@ -76,7 +78,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         
 
         public ICommand WorkoutAdd { get; }
-        public ICommand ReturnToPrevios { get; }
+        public ICommand Return { get; }
 
         //Workoutproperty to store the result
         public Workout Workout { get; private set; }
@@ -85,7 +87,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         {
             WorkoutAdd = new RelayCommand(AddWorkout);
 
-            ReturnToPrevios = new RelayCommand(Return);
+            Return = new RelayCommand(ReturnToPrevios);
         }
         public event Action<Workout> WorkoutAdded;
         public void AddWorkout(object parameter)
@@ -129,9 +131,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             ClearFields();
         }
 
-        public void Return(object parameter)
+        public void ReturnToPrevios(object parameter)
         {
-
+            var workoutsWindow = new WorkoutsWindow(); //Creating an instance of WorkoutsWindow
+            workoutsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
 
         private void ClearFields()

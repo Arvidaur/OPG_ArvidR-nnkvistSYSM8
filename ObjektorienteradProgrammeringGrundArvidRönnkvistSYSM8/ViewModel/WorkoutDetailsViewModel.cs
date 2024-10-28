@@ -1,6 +1,7 @@
 ﻿using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
 using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.MVVM;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class WorkoutDetailsViewModel : ViewModelBase
     {
+        public Action CloseAction { get; set; }
         private ObservableCollection<Workout> _workouts;
         public ObservableCollection<Workout> Workouts
         {
@@ -36,7 +38,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void ReturnToPreviusPage(object obj)
         {
-            throw new NotImplementedException();
+            var workoutsWindow = new WorkoutsWindow(); //Creating an instance of WorkoutsWindow
+            workoutsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
 
         private void WorkoutSave(object obj)
