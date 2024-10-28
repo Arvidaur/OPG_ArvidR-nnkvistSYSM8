@@ -66,7 +66,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void LogoutUser(object obj)
         {
-            User.ActiveUser = null;
+            //AdminUser.IsAdmin = false;    //Admin ska vara false vare sig det var en admin som var inloggad eller inte 
+            User.ActiveUser = null;     //Det är ska inte finnas någon active user när användaren loggar ut
             MessageBox.Show("Försöker stänga");
             Application.Current.Dispatcher.Invoke(() => CloseAction?.Invoke());
         }

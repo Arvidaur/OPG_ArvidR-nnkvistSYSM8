@@ -55,11 +55,18 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         //Method when uses tries to log into the app, checks if a user with username and password exists and logs in if true
         private void Login(object parameter)
         {
+            bool isAdmin;
             bool isValidUser;
-            // Check if user exists with the correct username and password
+            
             try
             {
-                if (Password == null || Username == null)
+                if (Username == "admin" && Password == "admin")
+                {
+                    isAdmin = true;
+                    AdminUser admin = new AdminUser(Username, Password, isAdmin);
+                    return;
+                }
+                else if (Password == null || Username == null)   // Check if user exists with the correct username and password
                 {
                     isValidUser = false;
                     MessageBox.Show("Empty fields", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -102,7 +109,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void ForgotPassword(object parameter)
         {
-            System.Windows.MessageBox.Show("Forgot password functionality is not implemented yet.");
+            var forgottenPasswordWindow = new ForgottenPasswordWindow(); //Creating an instance of UserDetailWindow
+            forgottenPasswordWindow.ShowDialog();
         }
 
         private void Register(object parameter)
