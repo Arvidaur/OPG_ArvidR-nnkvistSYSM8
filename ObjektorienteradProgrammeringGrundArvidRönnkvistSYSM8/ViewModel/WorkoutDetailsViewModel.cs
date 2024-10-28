@@ -15,25 +15,27 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
     public class WorkoutDetailsViewModel : ViewModelBase
     {
         public Action CloseAction { get; set; }
-        private ObservableCollection<Workout> _workouts;
-        public ObservableCollection<Workout> Workouts
-        {
-            get { return _workouts; }
-            set { _workouts = value; }
-        }
+        public Workout SelectedWorkout { get; set; }
+        
+        //private DateTime date = SelectedWorkout.Date;
+        //private string workoutType = SelectedWorkout.TypeOfWorkOut;
+        //private string confirmPassword = SelectedWorkout.;
+        //private string country = SelectedWorkout.;
+        //private string securityQuestion = SelectedWorkout.;
+        //private string securityAnswer = SelectedWorkout.;
 
         public ICommand EditWorkout { get; }
         public ICommand SaveWorkout { get; }
         public ICommand Return { get; }
 
-        public WorkoutDetailsViewModel()
+        public WorkoutDetailsViewModel(Workout selectedWorkout)
         {
-            Workouts = new ObservableCollection<Workout>();
+            
             EditWorkout = new RelayCommand(WorkoutEdit);
             SaveWorkout = new RelayCommand(WorkoutSave);
             Return = new RelayCommand(ReturnToPreviusPage);
 
-            LoadUserWorkouts(); //Calling method to load the workouts in the Details Window
+            SelectedWorkout = selectedWorkout;
         }
 
         private void ReturnToPreviusPage(object obj)
@@ -50,20 +52,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void WorkoutEdit(object obj)
         {
-            throw new NotImplementedException();
+            
         }
 
-        // Method to load workouts for the active user
-        private void LoadUserWorkouts()
-        {
-            if (User.ActiveUser != null)
-            {
-                Workouts.Clear();
-                foreach (var workout in User.ActiveUser.Workouts)
-                {
-                    Workouts.Add(workout);
-                }
-            }
-        }
+        
     }
 }

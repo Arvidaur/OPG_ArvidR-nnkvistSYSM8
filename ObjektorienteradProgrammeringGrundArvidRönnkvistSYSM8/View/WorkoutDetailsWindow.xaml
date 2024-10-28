@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View"
+        xmlns:local1="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Converters"
         mc:Ignorable="d"
         Title="WorkoutDetailsWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Register the converter in XAML resources -->
+        <local1:WorkoutTypeToLabelConverter x:Key="WorkoutTypeToLabelConverter"/>
+    </Window.Resources>
     <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="{Binding WelcomeMessage}" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
@@ -17,20 +22,26 @@
                 
             </WrapPanel>
 
-            <ListBox x:Name="lstBoxWorkouts" Width="600" Height="300" ItemsSource="{Binding Workouts}" SelectedItem="{Binding Selected}" ScrollBar.Scroll="lstBoxWorkouts_Scroll">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Date}" Margin="5"/>
-                            <TextBlock Text="{Binding TypeOfWorkOut}" Margin="5"/>
-                            <TextBlock Text="{Binding Duration}" Margin="5"/>
-                            <TextBlock Text="{Binding CaloriesBurned}" Margin="5"/>
-                            <TextBlock Text="{Binding RepDis}" Margin="5"/>
-                            <TextBlock Text="{Binding Notes}" Margin="5"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <Label Content="Datum" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="200"/>
+
+            <Label Content="Typ av träning" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding WorkoutType, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+
+            <Label Content="Varaktighet" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+
+            <Label Content="Kalorier brända" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+
+            <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}, Mode=TwoWay}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding RepDis, UpdateSourceTrigger=PropertyChanged}" x:Name="txtRepOrDis" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
+
+            <Label Content="Anteckningar" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+
+
+
 
 
         </StackPanel>

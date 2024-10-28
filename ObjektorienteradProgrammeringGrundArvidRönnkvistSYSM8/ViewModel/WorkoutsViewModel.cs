@@ -128,9 +128,12 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
        
         public void WorkoutDetails(object parameter)
         {
-            var workoutDetailsWindow = new WorkoutDetailsWindow();
-            workoutDetailsWindow.Show();
-            CloseAction?.Invoke(); // Close the current window
+            if (Selected != null)
+            {
+                var workoutDetailsWindow = new WorkoutDetailsWindow(Selected);
+                workoutDetailsWindow.Show();
+                CloseAction?.Invoke(); // Close the current window
+            }
         }
         public void UserEdit(object parameter)
         {

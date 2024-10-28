@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model;
+using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFolder;
+
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
 {
@@ -20,14 +23,14 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View
     /// </summary>
     public partial class WorkoutDetailsWindow : Window
     {
-        public WorkoutDetailsWindow()
+        public WorkoutDetailsWindow(Workout selectedWorkout)
         {
             InitializeComponent();
-            var viewModel = new WorkoutDetailsViewModel
+            var viewModel = new WorkoutDetailsViewModel(selectedWorkout)
             {
                 CloseAction = this.Close
             };
-            DataContext = viewModel; InitializeComponent();       
+            DataContext = viewModel;    
         }
 
         private void lstBoxWorkouts_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
