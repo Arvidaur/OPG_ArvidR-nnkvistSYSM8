@@ -53,6 +53,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand DetailsWorkout { get; }
         public ICommand EditUser { get; }
         public ICommand Logout { get; }
+        public ICommand Info { get; }
+
 
         public WorkoutsViewModel()
         {
@@ -62,8 +64,16 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             DetailsWorkout = new RelayCommand(WorkoutDetails);
             EditUser = new RelayCommand(UserEdit);
             Logout = new RelayCommand(LogoutUser);
+            Info = new RelayCommand(ShowInfoMessage);
 
             OnUserLogin();
+        }
+
+        private void ShowInfoMessage(object obj)    //Visar ett infofönster
+        {
+            MessageBox.Show("Lägg till: Öppnar ett fönster där du kan skapa nya träningspass. \n \nTa bort: Välj ett träningpass i listan med musen och tryck på Ta bort för att ta bort träningspasset. \n \n" +
+                "Detaljer: Välj ett träningspass i listan och tryck på detaljer för att få en detaljerad vy för träningspasset. \n \n" +
+                "Redigera användare: Öppnar ett fönster där du kan redigera din profil. \n \nLogga ut: Tryck för att logga ut", "Information", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
         private void LogoutUser(object obj)
@@ -74,11 +84,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             var mainWindow = new MainWindow(); //Creating an instance of UserDetailWindow
             mainWindow.Show();
             CloseAction?.Invoke(); // Close the current window
-        }
-
-        
-
-    
+        }  
 
         public void WorkoutAdd(object parameter)
         {
@@ -95,15 +101,30 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             CloseAction?.Invoke(); // Close the current window
         }
 
-        // Method to load workouts for the active user
-        private void LoadUserWorkouts()
+        private void LoadUserWorkouts() // Method to load workouts for the active user, if admin will load all the workouts
         {
-            if (User.ActiveUser != null)
+            string username;
+            Workouts.Clear();
+            if (User.ActiveUser.Username == "admin")    //Om admin loggar in ska alla träningpass synas
             {
-                Workouts.Clear();
-                foreach (var workout in User.ActiveUser.Workouts)
+                foreach (var user in User.Users)
                 {
-                    Workouts.Add(workout);
+                    username = user.Username;
+
+                    foreach (var workout in user.Workouts)
+                    {            
+                        Workouts.Add(workout);
+                    }             
+                }
+            }
+            else   //Om det inte är admin ska vi enbart visa den aktiva användaren 
+            {
+                if (User.ActiveUser != null)
+                {
+                    foreach (var workout in User.ActiveUser.Workouts)
+                    {
+                        Workouts.Add(workout);
+                    }
                 }
             }
         }
@@ -117,13 +138,17 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public void WorkoutRemove(object parameter)
         {
-            if(Selected != null)
+            if (Selected != null)
             {
                 Workouts.Remove(Selected);  //Tar bort träningspasset från UI
 
                 User.ActiveUser.Workouts.Remove(Selected);  //Tar bort passet från workout objektet som lagrar användarens träningspass
 
                 Selected = null;
+            }
+            else
+            {
+                MessageBox.Show("Välj ett träningspass att ta bort", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
        
@@ -134,6 +159,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 var workoutDetailsWindow = new WorkoutDetailsWindow(Selected);
                 workoutDetailsWindow.Show();
                 CloseAction?.Invoke(); // Close the current window
+            }
+            else
+            {
+                MessageBox.Show("Välj ett träningspass att se information om", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
         public void UserEdit(object parameter)

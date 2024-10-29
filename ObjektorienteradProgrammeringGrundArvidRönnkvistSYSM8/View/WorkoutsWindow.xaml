@@ -16,6 +16,7 @@
                 <Button x:Name="btnDetailsWorkout" Command="{Binding DetailsWorkout}" Content="Pass detaljer" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnEditUser" Command="{Binding EditUser}" Content="Redigera användare" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnLoggaUt" Command="{Binding Logout}" Content="Logga ut" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+                <Button x:Name="btnInfo" Command="{Binding Info}" Content="Info" Width="40" Height="22" Margin="5, 5" Background="#D3D3D3"/>
             </WrapPanel>
 
             <Label Content="Dina träningspass" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
@@ -23,12 +24,13 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Username}" Margin="5"/>
                             <TextBlock Text="{Binding Date}" Margin="5"/>
                             <TextBlock Text="{Binding TypeOfWorkOut}" Margin="5"/>
-                            <TextBlock Text="{Binding Duration}" Margin="5"/>
+                            <!--<TextBlock Text="{Binding Duration}" Margin="5"/>
                             <TextBlock Text="{Binding CaloriesBurned}" Margin="5"/>
                             <TextBlock Text="{Binding RepDis}" Margin="5"/>
-                            <TextBlock Text="{Binding Notes}" Margin="5"/>
+                            <TextBlock Text="{Binding Notes}" Margin="5"/>-->
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

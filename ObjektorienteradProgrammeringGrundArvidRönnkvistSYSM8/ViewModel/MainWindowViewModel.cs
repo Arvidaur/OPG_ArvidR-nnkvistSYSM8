@@ -64,7 +64,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         }
 
-        public void CreateBaseUser()    
+        public void CreateBaseUser()        //Skapar två basanvändare och en admin
         {
             User newUser = new User("Arvid", "Arvid123!", "Sverige", "Vad heter ditt husdjur?", "Gocho", RegisterViewModel.Workouts); //Skapar en basanvändare
             DateTime workoutDate1 = new DateTime(2024, 10, 28);
@@ -75,12 +75,28 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             CardioWorkout cardioWorkout = new CardioWorkout(workoutDate1, "Cardio", Duration1, 500, "Sprang 5 km i slottsparken, kändes bra", 5);
             StrengthWorkout strengthWorkout = new StrengthWorkout(workoutDate2, "Strength", Duration2, 600, "Gympass, fokus på ben.", 10);
 
+            User newUser2 = new User("Bertil", "StrongBert123!", "Danmark", "Vad heter din mamma i mellannamn?", "Birgit", RegisterViewModel.Workouts); //Skapar en till basanvändare
+            DateTime workoutDate3 = new DateTime(2024, 10, 28);
+            TimeSpan Duration3 = new TimeSpan(0, 30, 0);
+            DateTime workoutDate4 = new DateTime(2024, 10, 26);
+            TimeSpan Duration4 = new TimeSpan(1, 30, 0);
+
+            CardioWorkout cardioWorkout1 = new CardioWorkout(workoutDate1, "Cardio", Duration1, 500, "Sprang 5 km i slottsparken med Arvid, kändes bra", 5);
+            StrengthWorkout strengthWorkout1 = new StrengthWorkout(workoutDate2, "Strength", Duration2, 600, "Gympass, fokus på armar", 10);
+
             newUser.Workouts.Add(cardioWorkout);
             newUser.Workouts.Add(strengthWorkout);
 
-            User.Users.Add(newUser);
+            newUser2.Workouts.Add(cardioWorkout1);
+            newUser2.Workouts.Add(strengthWorkout1);
 
-            AdminUser admin = new AdminUser("admin", "admin");
+            User.Users.Add(newUser);
+            User.Users.Add(newUser2);
+
+            User admin = new User ("admin", "admin");
+            
+            User.Users.Add(admin);
+
 
 
         }
@@ -92,13 +108,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             bool isValidUser;
             
             try
-            {
-                if (Username == "admin" && Password == "admin")
-                {
-                    isAdmin = true;                    
-                    return;
-                }
-                else if (Password == null || Username == null)   // Check if user exists with the correct username and password
+            {               
+                if (Password == null || Username == null)   // Check if user exists with the correct username and password
                 {
                     isValidUser = false;
                     MessageBox.Show("Empty fields", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
