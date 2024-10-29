@@ -17,7 +17,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
     public class WorkoutDetailsViewModel : ViewModelBase
     {
         public Action CloseAction { get; set; }
-
+        private bool IsCopy = false;
         private bool _isEditing;
         public bool IsEditing
         {
@@ -108,10 +108,12 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand EditWorkout { get; }
         public ICommand SaveWorkout { get; }
         public ICommand Return { get; }
+        public ICommand CopyWorkout { get; }
 
         public WorkoutDetailsViewModel(Workout selectedWorkout)
         {
-            SelectedWorkout = selectedWorkout;
+            //Standardvärden ska vara det valda passet
+            SelectedWorkout = selectedWorkout;  
             WorkoutType = selectedWorkout.TypeOfWorkOut;
             Date = selectedWorkout.Date;
             Duration = selectedWorkout.Duration;
@@ -119,11 +121,31 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             Notes = selectedWorkout.Notes;
             RepDis = selectedWorkout.RepDis;
 
-            IsEditing = false;  
+            IsEditing = false;  //Som default kan fälten inte redigeras tills användaren trycker på redigera knappen
+
 
             EditWorkout = new RelayCommand(WorkoutEdit);
             SaveWorkout = new RelayCommand(WorkoutSave);
-            Return = new RelayCommand(ReturnToPreviusPage);          
+            Return = new RelayCommand(ReturnToPreviusPage);
+            CopyWorkout = new RelayCommand(CopySelectedWorkout);
+            
+        }
+
+        private void CopySelectedWorkout(object obj)
+        {
+            IsCopy = true;  //När användaren sparar passet så sparas det som en kopia
+            Workout copyOfSelectedWorkout = null;
+            if (SelectedWorkout is StrengthWorkout)
+            {
+                copyOfSelectedWorkout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+            }
+            else if (SelectedWorkout is CardioWorkout)
+            {
+                copyOfSelectedWorkout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+            }
+            
+            User.ActiveUser.Workouts.Add(copyOfSelectedWorkout);
+            MessageBox.Show("Kopia har skapats" , "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void ReturnToPreviusPage(object obj)
@@ -135,11 +157,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void WorkoutSave(object obj)
         {
-            SelectedWorkout.TypeOfWorkOut = WorkoutType;
-            SelectedWorkout.Date = Date;
-            SelectedWorkout.Duration = Duration;
-            SelectedWorkout.Notes = Notes;
-            SelectedWorkout.RepDis = RepDis;
+                SelectedWorkout.TypeOfWorkOut = WorkoutType;
+                SelectedWorkout.Date = Date;
+                SelectedWorkout.Duration = Duration;
+                SelectedWorkout.Notes = Notes;
+                SelectedWorkout.RepDis = RepDis;           
 
             if (Date > DateTime.Now)
             {

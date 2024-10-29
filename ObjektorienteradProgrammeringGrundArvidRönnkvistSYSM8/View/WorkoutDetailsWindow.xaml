@@ -18,6 +18,7 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Button x:Name="btnEditWorkout" Command="{Binding EditWorkout}" Content="Redigera pass" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnSaveWorkout" Command="{Binding SaveWorkout}" Content="Spara ändringar" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+                <Button x:Name="btnCopyWorkout" Command="{Binding CopyWorkout}" Content="Kopiera" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnReturn" Command="{Binding Return}" Content="Tillbaka" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
             </WrapPanel>
 
