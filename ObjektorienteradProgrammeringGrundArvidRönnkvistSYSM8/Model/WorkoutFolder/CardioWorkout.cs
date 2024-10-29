@@ -9,14 +9,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
     class CardioWorkout : Workout
     {
 
-        //Propeties
-        public int RepDis { get; set; }
 
         //Contructor
-        public CardioWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration, int CaloriesBurned, string Notes, int RepDis   )
-            : base(Date, TypeOfWorkOut, Duration, CaloriesBurned, Notes)
+        public CardioWorkout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration, int CaloriesBurned, string Notes, int RepDis)
+            : base(Date, TypeOfWorkOut, Duration, CaloriesBurned, Notes, RepDis)
         {
-            this.RepDis = RepDis;
 
         }
         public override int CalculateCaloriesBurned()

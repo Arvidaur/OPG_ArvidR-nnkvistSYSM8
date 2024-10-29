@@ -32,7 +32,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ObservableCollection<Workout> Workouts
         {
             get { return _workouts; }
-            set { _workouts = value; }
+            set { 
+                _workouts = value;
+                OnPropertyChanged(nameof(Selected)); 
+                }
         }
 
         private Workout _selected;  //Egenskap som håller den det valda träningspasset
@@ -59,17 +62,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             DetailsWorkout = new RelayCommand(WorkoutDetails);
             EditUser = new RelayCommand(UserEdit);
             Logout = new RelayCommand(LogoutUser);
-            
 
-            LoadUserWorkouts();
+            OnUserLogin();
         }
 
         private void LogoutUser(object obj)
         {
             //AdminUser.IsAdmin = false;    //Admin ska vara false vare sig det var en admin som var inloggad eller inte 
             User.ActiveUser = null;     //Det är ska inte finnas någon active user när användaren loggar ut
-            
-            
+                        
             var mainWindow = new MainWindow(); //Creating an instance of UserDetailWindow
             mainWindow.Show();
             CloseAction?.Invoke(); // Close the current window
@@ -111,7 +112,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public void OnUserLogin()
         {
             LoadUserWorkouts();
-            WelcomeMessage = $"Welcome {User.ActiveUser.Username}!";
+            WelcomeMessage = $"Välkommen {User.ActiveUser.Username}!";
         }
 
         public void WorkoutRemove(object parameter)

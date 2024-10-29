@@ -10,35 +10,45 @@
     <Window.Resources>
         <!-- Register the converter in XAML resources -->
         <local1:WorkoutTypeToLabelConverter x:Key="WorkoutTypeToLabelConverter"/>
+        <local1:BooleanInverterConverter x:Key="BooleanInverterConverter"/>
     </Window.Resources>
     <Grid Background="#DC143C">
         <StackPanel>
-            <Label Content="{Binding WelcomeMessage}" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
             <WrapPanel HorizontalAlignment="Center">
                 <Button x:Name="btnEditWorkout" Command="{Binding EditWorkout}" Content="Redigera pass" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnSaveWorkout" Command="{Binding SaveWorkout}" Content="Spara ändringar" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnReturn" Command="{Binding Return}" Content="Tillbaka" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
-                
             </WrapPanel>
 
             <Label Content="Datum" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="200"/>
+            <TextBox Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}"
+                     HorizontalAlignment="Center" Width="200"/>
 
             <Label Content="Typ av träning" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding WorkoutType, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+            <ComboBox x:Name="WorkoutTypeComboBox" Width="200" 
+          SelectedValue="{Binding WorkoutType, Mode=TwoWay}" 
+          SelectedValuePath="Content" IsEnabled="{Binding IsEditing}" 
+            Background="#D3D3D3">
+                <ComboBoxItem Content="Strength"/>
+                <ComboBoxItem Content="Cardio"/>
+            </ComboBox>
 
             <Label Content="Varaktighet" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+            <TextBox Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}"
+                     HorizontalAlignment="Center" Width="200"  />
 
             <Label Content="Kalorier brända" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}"
+                     HorizontalAlignment="Center" Width="200"  />
 
             <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}, Mode=TwoWay}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding RepDis, UpdateSourceTrigger=PropertyChanged}" x:Name="txtRepOrDis" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
+            <TextBox Text="{Binding RepDis, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}"
+                     HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
             <Label Content="Anteckningar" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" HorizontalAlignment="Center" Width="200"  />
+            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" 
+                     IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}" HorizontalAlignment="Center" Width="500" Height="50"/>
 
 
 
