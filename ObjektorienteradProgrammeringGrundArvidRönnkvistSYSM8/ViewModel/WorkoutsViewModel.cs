@@ -11,11 +11,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class WorkoutsViewModel : ViewModelBase
     {
+        private bool isAscending = true;    //Skiftar från högst till lägst och viseverse, används i sorterings logiken
+
         public Action CloseAction { get; set; }
         private string _welcomeMessage;
         public string WelcomeMessage
@@ -54,6 +57,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand EditUser { get; }
         public ICommand Logout { get; }
         public ICommand Info { get; }
+        public ICommand SortDate { get; }
+        public ICommand SortWorkoutType { get; }
+        public ICommand SortDuration { get; }
 
 
         public WorkoutsViewModel()
@@ -65,15 +71,94 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             EditUser = new RelayCommand(UserEdit);
             Logout = new RelayCommand(LogoutUser);
             Info = new RelayCommand(ShowInfoMessage);
+            SortDate = new RelayCommand(GetSortByDate);
+            SortWorkoutType = new RelayCommand(SortByWorkoutType);            
+            SortDuration = new RelayCommand(SortByDuration);
 
             OnUserLogin();
+        }
+
+        private void SortByDuration(object obj)
+        {
+            if (User.ActiveUser != null)
+            {
+                if (isAscending)
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Duration).ToList();  //Sorterar listan baserat på hur länge passet varade
+                }
+                else
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.Duration).ToList();
+                }
+
+                Workouts.Clear();
+                foreach (var workout in User.ActiveUser.Workouts)
+                {
+
+                    Workouts.Add(workout);
+                }
+                
+                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
+            }
+        }
+
+       
+
+        private void SortByWorkoutType(object obj)
+        {
+            if (User.ActiveUser != null)
+            {
+                if (isAscending)
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.TypeOfWorkOut).ToList();
+                }
+                else
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.TypeOfWorkOut).ToList();
+                }
+
+                Workouts.Clear();
+                foreach (var workout in User.ActiveUser.Workouts)
+                {
+
+                    Workouts.Add(workout);
+                }
+
+                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
+            }
+        }
+
+        private void GetSortByDate(object obj)
+        {
+            if (User.ActiveUser != null)
+            {
+                if (isAscending)
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Date).ToList();  
+                }
+                else
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.Date).ToList();
+                }
+
+                Workouts.Clear();
+                foreach (var workout in User.ActiveUser.Workouts)
+                {
+
+                    Workouts.Add(workout);
+                }
+
+                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
+            }
         }
 
         private void ShowInfoMessage(object obj)    //Visar ett infofönster
         {
             MessageBox.Show("Lägg till: Öppnar ett fönster där du kan skapa nya träningspass. \n \nTa bort: Välj ett träningpass i listan med musen och tryck på Ta bort för att ta bort träningspasset. \n \n" +
                 "Detaljer: Välj ett träningspass i listan och tryck på detaljer för att få en detaljerad vy för träningspasset. \n \n" +
-                "Redigera användare: Öppnar ett fönster där du kan redigera din profil. \n \nLogga ut: Tryck för att logga ut", "Information", MessageBoxButton.OK, MessageBoxImage.Question);
+                "Redigera användare: Öppnar ett fönster där du kan redigera din profil. \n \nLogga ut: Tryck för att logga ut \n \n" +
+                "Sortering: Du kan sortera träningpassen efter datum, träningsform och varaktighet. Tryck på samma knapp igen för att sortera från andra hållet.",
+                "Information", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
         private void LogoutUser(object obj)

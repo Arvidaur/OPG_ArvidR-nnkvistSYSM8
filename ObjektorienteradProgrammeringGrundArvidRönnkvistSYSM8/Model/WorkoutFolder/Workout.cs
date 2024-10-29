@@ -18,7 +18,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
         
 
         //Contructor
-        public Workout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration,  int CaloriesBurned, string Notes, int RepDis)
+        public Workout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration, int CaloriesBurned, string Notes, int RepDis)
         {
             this.Date = Date;
             this.TypeOfWorkOut = TypeOfWorkOut;

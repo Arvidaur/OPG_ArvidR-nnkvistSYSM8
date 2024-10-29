@@ -24,7 +24,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
 
         public override int CalculateCaloriesBurned()
         {
-            throw new NotImplementedException();
+            return ((int)(Duration.TotalMinutes * RepDis)/2);   //Strength workout burns half the amount of calories compared to cardio workout 
         }
     }
 }

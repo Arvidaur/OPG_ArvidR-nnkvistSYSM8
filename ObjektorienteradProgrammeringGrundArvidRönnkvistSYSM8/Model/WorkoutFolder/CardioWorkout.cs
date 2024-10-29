@@ -18,7 +18,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
         }
         public override int CalculateCaloriesBurned()
         {
-            throw new NotImplementedException();
+            return (int)(Duration.TotalMinutes * RepDis);
         }
     }
 }

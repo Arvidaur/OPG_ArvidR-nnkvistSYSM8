@@ -138,14 +138,54 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             SelectedWorkout.TypeOfWorkOut = WorkoutType;
             SelectedWorkout.Date = Date;
             SelectedWorkout.Duration = Duration;
-            SelectedWorkout.CaloriesBurned = Calories;
             SelectedWorkout.Notes = Notes;
             SelectedWorkout.RepDis = RepDis;
-            
+
+            if (Date > DateTime.Now)
+            {
+                MessageBox.Show("Datumet kan inte vara i framtiden.", "Felaktigt datum", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate Duration is a positive timespan
+            if (Duration <= TimeSpan.Zero)
+            {
+                MessageBox.Show("Varaktigheten måste vara större än noll.", "Felaktig varaktighet", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (RepDis <= 0)
+            {
+                if (WorkoutType == "Strength")
+                {
+                    MessageBox.Show("Repititioner kan inte vara negativt eller 0.", "Felaktigt värde för Repetitioner", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (WorkoutType == "Cardio")
+                {
+                    MessageBox.Show("Distans kan inte vara negativt eller 0.", "Felaktigt värde för Distans", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return;
+            }
+
+            if (WorkoutType == "Strength")
+            {
+                SelectedWorkout.CaloriesBurned = SelectedWorkout.CalculateCaloriesBurned();
+            }
+            else if (WorkoutType == "Cardio")
+            {
+                SelectedWorkout.CaloriesBurned = SelectedWorkout.CalculateCaloriesBurned();
+            }
+
+
+
             IsEditing = false;
 
             OnPropertyChanged(nameof(SelectedWorkout));
             MessageBox.Show("Ändringarna har sparats!", "Success!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            var workoutsWindow = new WorkoutsWindow(); //Går tillbaka till WorkoutsWindow
+            workoutsWindow.Show();
+            CloseAction?.Invoke(); // Close the current window
         }
 
         private void WorkoutEdit(object obj)

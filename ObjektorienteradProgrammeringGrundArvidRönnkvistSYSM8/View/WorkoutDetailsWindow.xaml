@@ -39,7 +39,7 @@
                      HorizontalAlignment="Center" Width="200"  />
 
             <Label Content="Kalorier brända" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" IsReadOnly="{Binding IsEditing, Converter={StaticResource BooleanInverterConverter}}"
+            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" IsReadOnly="True"
                      HorizontalAlignment="Center" Width="200"  />
 
             <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}, Mode=TwoWay}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>

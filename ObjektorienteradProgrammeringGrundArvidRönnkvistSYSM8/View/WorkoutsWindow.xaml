@@ -16,7 +16,14 @@
                 <Button x:Name="btnDetailsWorkout" Command="{Binding DetailsWorkout}" Content="Pass detaljer" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnEditUser" Command="{Binding EditUser}" Content="Redigera användare" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
                 <Button x:Name="btnLoggaUt" Command="{Binding Logout}" Content="Logga ut" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
-                <Button x:Name="btnInfo" Command="{Binding Info}" Content="Info" Width="40" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+            </WrapPanel>
+            
+            <WrapPanel HorizontalAlignment="Center">
+                <Label Content="Sortera efter:" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+                <Button Command="{Binding SortDate}" Content="Datum" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+                <Button Command="{Binding SortWorkoutType}" Content="Typ av träning" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+                <Button Command="{Binding SortDuration}" Content="Varaktighet" Width="100" Height="22" Margin="5, 5" Background="#D3D3D3"/>
+                <Button x:Name="btnInfo" Command="{Binding Info}" Content="Info" Width="40" Height="22" Margin="36, 5" Background="#D3D3D3"/>
             </WrapPanel>
 
             <Label Content="Dina träningspass" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
@@ -27,8 +34,8 @@
                             <TextBlock Text="{Binding Username}" Margin="5"/>
                             <TextBlock Text="{Binding Date}" Margin="5"/>
                             <TextBlock Text="{Binding TypeOfWorkOut}" Margin="5"/>
-                            <!--<TextBlock Text="{Binding Duration}" Margin="5"/>
-                            <TextBlock Text="{Binding CaloriesBurned}" Margin="5"/>
+                            <TextBlock Text="{Binding Duration}" Margin="5"/>
+                            <!--<TextBlock Text="{Binding CaloriesBurned}" Margin="5"/>
                             <TextBlock Text="{Binding RepDis}" Margin="5"/>
                             <TextBlock Text="{Binding Notes}" Margin="5"/>-->
                         </StackPanel>

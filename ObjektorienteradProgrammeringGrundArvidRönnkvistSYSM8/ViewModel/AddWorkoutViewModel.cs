@@ -45,16 +45,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
-        public int Calories
-        {
-            get => calories;
-            set
-            {
-                calories = value;
-                OnPropertyChanged(nameof(Calories));
-            }
-        }
-
         public string Notes
         {
             get => notes;
@@ -62,6 +52,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             {
                 notes = value;
                 OnPropertyChanged(nameof(Notes));
+            }
+        }
+        public int Calories
+        {
+            get => calories;
+            set
+            {
+                calories = value;
+                OnPropertyChanged(nameof(Calories));
             }
         }
 
@@ -97,18 +96,48 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             {
                 return;
             }
+            
+            if (Date > DateTime.Now)
+            {
+                MessageBox.Show("Datumet kan inte vara i framtiden.", "Felaktigt datum", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Validate Duration is a positive timespan
+            if (Duration <= TimeSpan.Zero)
+            {
+                MessageBox.Show("Varaktigheten måste vara större än noll.", "Felaktig varaktighet", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (RepDis <= 0)
+            {
+                if (WorkoutType == "Strength")
+                {
+                    MessageBox.Show("Repititioner kan inte vara negativt eller 0.", "Felaktigt värde för Repetitioner", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (WorkoutType == "Cardio")
+                {
+                    MessageBox.Show("Distans kan inte vara negativt eller 0.", "Felaktigt värde för Distans", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return;
+            }
 
             Workout workout;
 
             if (workoutType == "Strength")
             {
-                
-                workout = new StrengthWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
-                MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Repetitions: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
+                workout = new StrengthWorkout(Date, WorkoutType, Duration, 0, Notes, RepDis);
+                workout.CaloriesBurned = workout.CalculateCaloriesBurned();
+                Calories = workout.CaloriesBurned;
+                MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories} Repetitions: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (workoutType == "Cardio")
-            {                
-                workout = new CardioWorkout(Date, WorkoutType, Duration, Calories, Notes, RepDis);
+            {
+                
+                workout = new CardioWorkout(Date, WorkoutType, Duration, 0, Notes, RepDis);
+                workout.CaloriesBurned = workout.CalculateCaloriesBurned();
+                Calories = workout.CaloriesBurned;
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Distance: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
@@ -141,9 +170,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private void ClearFields()
         {
             WorkoutType = string.Empty;
-            Duration = TimeSpan.Zero;
-            Calories = 0;
+            Duration = TimeSpan.Zero;            
             Notes = string.Empty;
+            Calories = 0;
             RepDis = 0;
         }
     }

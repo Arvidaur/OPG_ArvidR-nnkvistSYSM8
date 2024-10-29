@@ -28,8 +28,8 @@
             <Label Content="Workout duration" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             <TextBox Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxDuration" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
-            <Label Content="Calories burned" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged}" x:Name="txtBoxCalories" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
+            <Label Content="Kalorier brända" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
+            <TextBox Text="{Binding Calories, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HorizontalAlignment="Center" Width="200" Background="#D3D3D3"/>
 
             <!--Dynamic label depending on workouttype-->
             <Label Content="{Binding WorkoutType, Converter={StaticResource WorkoutTypeToLabelConverter}, Mode=TwoWay}" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
