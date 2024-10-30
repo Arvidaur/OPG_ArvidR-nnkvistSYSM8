@@ -213,6 +213,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private void WorkoutEdit(object obj)
         {
             IsEditing = true;
+            MessageBox.Show("Du kan nu redigera träningspasset!", "Editing enabled!", MessageBoxButton.OK, MessageBoxImage.Information);
         }        
     }
 }

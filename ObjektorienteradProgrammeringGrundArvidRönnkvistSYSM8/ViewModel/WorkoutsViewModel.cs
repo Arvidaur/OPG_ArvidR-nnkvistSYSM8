@@ -5,6 +5,7 @@ using ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public WorkoutsViewModel()
         {
             Workouts = new ObservableCollection<Workout>();
+            
             AddWorkout = new RelayCommand(WorkoutAdd);
             RemoveWorkout = new RelayCommand(WorkoutRemove);
             DetailsWorkout = new RelayCommand(WorkoutDetails);
@@ -75,9 +77,22 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             SortWorkoutType = new RelayCommand(SortByWorkoutType);            
             SortDuration = new RelayCommand(SortByDuration);
 
+            Workouts.CollectionChanged += Workouts_CollectionChanged; // Subscribe to changes
+
             OnUserLogin();
         }
-
+        private void Workouts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // Perform additional actions based on the type of change (e.g., item added or removed)
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                // Handle adding logic
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                // Handle removing logic
+            }
+        }
         private void SortByDuration(object obj)
         {
             if (User.ActiveUser != null)
@@ -173,7 +188,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public void WorkoutAdd(object parameter)
         {
-            // Create an instance of the AddWorkoutWindow
+            //Create an instance of the AddWorkoutWindow
             var addWorkoutWindow = new AddWorkoutWindow();
 
             // Get the ViewModel of the AddWorkoutWindow
@@ -184,17 +199,21 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
             addWorkoutWindow.Show();
             CloseAction?.Invoke(); // Close the current window
+
+            //var addWorkoutWindow = new AddWorkoutWindow();
+            //addWorkoutWindow.Show();
+            //CloseAction?.Invoke(); // Close the current window
         }
 
         private void LoadUserWorkouts() // Method to load workouts for the active user, if admin will load all the workouts
         {
-            string username;
+            //string username;
             Workouts.Clear();
             if (User.ActiveUser.Username == "admin")    //Om admin loggar in ska alla träningpass synas
             {
                 foreach (var user in User.Users)
                 {
-                    username = user.Username;
+                    //username = user.Username;
 
                     foreach (var workout in user.Workouts)
                     {            

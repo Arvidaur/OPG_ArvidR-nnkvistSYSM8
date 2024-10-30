@@ -117,7 +117,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
 
 
-        private void SaveUserChanges(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett. !!!!!Ska implementera där jag ser till att användarnamnet inte redan existerar
+        private void SaveUserChanges(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett.
         {
             bool sameUsername = CurrentUsername == Username;
             bool userExists = User.Users.Any(user => user.Username == Username && user.Username != CurrentUsername);    //Om användaren inte bytt sitt användarnamn går vi vidare. Om det finns en användare med samma användarnamn returnar vi
@@ -126,9 +126,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 MessageBox.Show("There already exists a user with this username.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(Username))
+            else if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3)
             {
-                MessageBox.Show("Username cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Username must be longer than 3 characters.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else if (string.IsNullOrWhiteSpace(Password))
@@ -161,6 +161,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 MessageBox.Show("Password has to contain at least one digit", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            else if (!HasSpecialCharacter(Password))
+            {
+                MessageBox.Show("Password has to contain at least one special character (e.g., !, @, #, $, %, ^, &, *, etc.)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             else if (string.IsNullOrWhiteSpace(Country))
             {
                 MessageBox.Show("Country cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -178,17 +183,26 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }            
             else
             {
-                SaveUserDetails(parameter);
+                SaveUserDetails(parameter); //Allt är okej och vi kan redigera användaren med inmatningen som parametrar
             }
+        }
+
+        private bool HasSpecialCharacter(string password)
+        {
+            // Define special characters. You can modify this set as needed.
+            string specialCharacters = "!@#$%^&*()_+-=[]{}|;':\",.<>?/";
+            return password.Any(c => specialCharacters.Contains(c));
         }
 
         private void SaveUserDetails(object parameter)
         {
-            //User newUser = new User(Username, Password, Country, SecurityQuestion, SecurityAnswer);
-
-            //User.Users.Add(newUser);
-            
-            //List<StrengthWorkout> strengthWorkouts = new List<StrengthWorkout>();
+            // Update the properties directly on the existing ActiveUser instance
+            User.ActiveUser.Username = Username;
+            User.ActiveUser.Password = Password; // Consider hashing passwords for security
+            User.ActiveUser.Country = Country;
+            User.ActiveUser.SecurityQuestion = SecurityQuestion;
+            User.ActiveUser.SecurityAnswer = SecurityAnswer;
+           
 
             MessageBox.Show($"User has been edited! Username: {Username}. Password: {Password}. Country: {Country}. Security question: {SecurityQuestion}. Security answer: {SecurityAnswer}. " ,
                 "User Created", MessageBoxButton.OK, MessageBoxImage.Information);

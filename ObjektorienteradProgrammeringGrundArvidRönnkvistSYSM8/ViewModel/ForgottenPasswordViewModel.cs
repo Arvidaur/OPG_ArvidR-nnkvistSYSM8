@@ -158,8 +158,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 }
             }
             else 
-            {
-                MessageBox.Show("Okänt fel", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            {                
                 return;
             }
         }
@@ -167,30 +166,38 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private void GetCode(object obj)
         {
             // Ensure ActiveUser is set
-            SetActiveUser();
-            if (User.ActiveUser == null) return;
-
-            SecurityCode = ""; // Reset SecurityCode
-            SecurityQuestion = User.ActiveUser.SecurityQuestion;
-
-            for (int i = 0; i < 4; i++) //Vi genererar en slumpad kod anändaren ska skriva in för att återställa sitt lösenord
+            if (SetActiveUser())    //Om vi inte hittar en användare med inmatat användarnamn ska det inte gå
             {
-                SecurityCode += rnd.Next(1, 10);
-            }
+                if (User.ActiveUser == null) return;
 
-            MessageBox.Show(SecurityCode, "Säkerhetskod", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                SecurityCode = ""; // Reset SecurityCode
+                SecurityQuestion = User.ActiveUser.SecurityQuestion;
+
+                for (int i = 0; i < 4; i++) //Vi genererar en slumpad kod anändaren ska skriva in för att återställa sitt lösenord
+                {
+                    SecurityCode += rnd.Next(1, 10);
+                }
+
+                MessageBox.Show(SecurityCode, "Säkerhetskod", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                return;
+            }
         }
 
-        public void SetActiveUser()
+        public bool SetActiveUser()
         {
-            var user = User.Users.FirstOrDefault(u => u.Username == Username);
+            var user = User.Users.FirstOrDefault(u => u.Username == Username);  //Ser om det finns en användare med det inmatade användarnamnet
             if (user != null)
             {
                 User.ActiveUser = user;
+                return true;    //Vi hittade en användare med användarnamnet
             }
             else
             {
                 MessageBox.Show("Användare med detta namn hittades inte.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;    //Vi hittade inte en användare med användarnamnet
             }
         }
 

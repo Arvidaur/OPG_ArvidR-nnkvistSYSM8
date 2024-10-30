@@ -134,10 +134,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
                 var workoutsViewModel = new WorkoutsViewModel();
                 workoutsViewModel.OnUserLogin(); // Set the log in message
-              
+
                 var workoutsWindow = new WorkoutsWindow(); //Creating an instance of UserDetailWindow
                 workoutsWindow.Show();
-                CloseAction?.Invoke(); // Close the current window
+                CloseAction?.Invoke(); // Close the current windoww
             }
             else
             {

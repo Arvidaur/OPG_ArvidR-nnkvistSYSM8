@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View"
         mc:Ignorable="d"
         Title="UserDetailsWindow" Height="450" Width="800">
-    <Grid Background="#DC143C">
+    <ScrollViewer>
+        <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="Redigera profil" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
             
@@ -43,7 +44,8 @@ SelectedValuePath="Content"
             <TextBox Text="{Binding SecurityAnswer, UpdateSourceTrigger=PropertyChanged, Mode = TwoWay}" x:Name="txtBoxSecurityAnswer" HorizontalAlignment="Center" Width="200"  />
 
             <Button x:Name="btnSaveChanges" Command="{Binding SaveChanges}" Content="Spara ändringar" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
-            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Avbryt" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
+            <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Tillbaka" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Window>

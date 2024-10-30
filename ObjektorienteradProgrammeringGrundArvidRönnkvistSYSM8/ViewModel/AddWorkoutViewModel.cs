@@ -22,7 +22,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private string notes = "";
         
         private int repDis;    //Repetitions / Distance beroende på om användaren vill logga ett fys eller styrkepass
-        //private int distance;  
+          
         
 
         public string WorkoutType
@@ -89,6 +89,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             Return = new RelayCommand(ReturnToPrevios);
         }
         public event Action<Workout> WorkoutAdded;
+        
         public void AddWorkout(object parameter)
         {
             

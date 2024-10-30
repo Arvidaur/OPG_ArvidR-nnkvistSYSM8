@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View"
         mc:Ignorable="d"
         Title="Register" Height="450" Width="800">
-    <Grid Background="#DC143C">
+    <ScrollViewer>
+        <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="Registrera dig hos FitTrack!" FontSize="20" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
@@ -47,5 +48,6 @@
             <Button x:Name="btnCancel" Command="{Binding Cancel}" Content="Tillbaka" Width="100" Height="22" Margin="0, 5" Background="#D3D3D3"/>
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Window>
 

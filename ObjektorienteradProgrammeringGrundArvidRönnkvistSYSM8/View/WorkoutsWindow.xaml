@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.View"
         mc:Ignorable="d"
         Title="WorkoutsWindow" Height="450" Width="800">
-    <Grid Background="#DC143C">
+    <ScrollViewer>
+        <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="{Binding WelcomeMessage}" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
@@ -27,7 +28,7 @@
             </WrapPanel>
 
             <Label Content="Dina träningspass" FontSize="18" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
-            <ListBox x:Name="lstBoxWorkouts" Width="600" Height="300" ItemsSource="{Binding Workouts}" SelectedItem="{Binding Selected}" ScrollBar.Scroll="lstBoxWorkouts_Scroll">
+            <ListBox x:Name="lstBoxWorkouts" Width="600" Height="250" ItemsSource="{Binding Workouts}" SelectedItem="{Binding Selected}" ScrollBar.Scroll="lstBoxWorkouts_Scroll">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -46,4 +47,5 @@
 
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Window>

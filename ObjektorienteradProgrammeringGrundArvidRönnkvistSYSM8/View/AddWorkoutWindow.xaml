@@ -12,8 +12,8 @@
         <!-- Register the converter in XAML resources -->
         <local1:WorkoutTypeToLabelConverter x:Key="WorkoutTypeToLabelConverter"/>
     </Window.Resources>
-    
-    <Grid Background="#DC143C">
+    <ScrollViewer>
+        <Grid Background="#DC143C">
         <StackPanel>
             <Label Content="Add Workout!" FontSize="26" HorizontalAlignment="Center" Foreground="#D3D3D3"/>
 
@@ -43,4 +43,5 @@
 
         </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Window>
