@@ -32,7 +32,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Username}" Margin="5"/>
+                            <!--<TextBlock Text="{Binding Username}" Margin="5"/>-->
                             <TextBlock Text="{Binding Date}" Margin="5"/>
                             <TextBlock Text="{Binding TypeOfWorkOut}" Margin="5"/>
                             <TextBlock Text="{Binding Duration}" Margin="5"/>

@@ -244,18 +244,27 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         {
             if (Selected != null)
             {
-                Workouts.Remove(Selected);  //Tar bort träningspasset från UI
+                // Remove from the ActiveUser's workout list first
+                bool removed = User.ActiveUser.Workouts.Remove(Selected);
 
-                User.ActiveUser.Workouts.Remove(Selected);  //Tar bort passet från workout objektet som lagrar användarens träningspass
+                if (removed)
+                {
+                    // Then clear the ObservableCollection and re-add items from ActiveUser's updated list usingLoadUserWorkouts Method
+                    LoadUserWorkouts();                    
 
-                Selected = null;
+                    Selected = null;  // Clear selection
+                }
+                else
+                {
+                    MessageBox.Show("Could not remove the workout from the user list.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
             else
             {
                 MessageBox.Show("Välj ett träningspass att ta bort", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-        }
-       
+        }       
+
         public void WorkoutDetails(object parameter)
         {
             if (Selected != null)
