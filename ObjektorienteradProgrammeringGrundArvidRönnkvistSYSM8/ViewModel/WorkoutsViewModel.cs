@@ -188,21 +188,24 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public void WorkoutAdd(object parameter)
         {
-            //Create an instance of the AddWorkoutWindow
-            var addWorkoutWindow = new AddWorkoutWindow();
+            if (User.ActiveUser.Username != "admin")
+            {
+                //Create an instance of the AddWorkoutWindow
+                var addWorkoutWindow = new AddWorkoutWindow();
 
-            // Get the ViewModel of the AddWorkoutWindow
-            var addWorkoutViewModel = (AddWorkoutViewModel)addWorkoutWindow.DataContext;
+                // Get the ViewModel of the AddWorkoutWindow
+                var addWorkoutViewModel = (AddWorkoutViewModel)addWorkoutWindow.DataContext;
 
-            // Subscribe to the WorkoutAdded event
-            addWorkoutViewModel.WorkoutAdded += (workout) => Workouts.Add(workout);
+                // Subscribe to the WorkoutAdded event
+                addWorkoutViewModel.WorkoutAdded += (workout) => Workouts.Add(workout);
 
-            addWorkoutWindow.Show();
-            CloseAction?.Invoke(); // Close the current window
-
-            //var addWorkoutWindow = new AddWorkoutWindow();
-            //addWorkoutWindow.Show();
-            //CloseAction?.Invoke(); // Close the current window
+                addWorkoutWindow.Show();
+                CloseAction?.Invoke(); // Close the current window
+            }
+            else    //admin kan enbart se alla träningspass, redigera träningspass och ta bort träningspass
+            {
+                MessageBox.Show("Admin kan inte lägga till träningspass", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }           
         }
 
         private void LoadUserWorkouts() // Method to load workouts for the active user, if admin will load all the workouts
@@ -221,7 +224,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                     }             
                 }
             }
-            else   //Om det inte är admin ska vi enbart visa den aktiva användaren 
+            else   //Om det inte är admin ska vi enbart visa den aktiva användarens träningspass 
             {
                 if (User.ActiveUser != null)
                 {
@@ -244,26 +247,42 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         {
             if (Selected != null)
             {
-                // Remove from the ActiveUser's workout list first
-                bool removed = User.ActiveUser.Workouts.Remove(Selected);
+                bool removed = false;
+
+                // If the admin is removing a workout, search through each user's list
+                if (User.ActiveUser.Username == "admin")
+                {
+                    foreach (var user in User.Users)
+                    {
+                        if (user.Workouts.Remove(Selected))
+                        {
+                            removed = true;
+                            break;  // Stop after finding and removing the workout
+                        }
+                    }
+                }
+                else
+                {
+                    // Non-admin user can only remove from their own list
+                    removed = User.ActiveUser.Workouts.Remove(Selected);
+                }
 
                 if (removed)
                 {
-                    // Then clear the ObservableCollection and re-add items from ActiveUser's updated list usingLoadUserWorkouts Method
-                    LoadUserWorkouts();                    
-
+                    // Refresh the UI list to reflect changes
+                    LoadUserWorkouts();
                     Selected = null;  // Clear selection
                 }
                 else
                 {
-                    MessageBox.Show("Could not remove the workout from the user list.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show("Could not remove the workout from the list.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
             else
             {
                 MessageBox.Show("Välj ett träningspass att ta bort", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
-        }       
+        }
 
         public void WorkoutDetails(object parameter)
         {
