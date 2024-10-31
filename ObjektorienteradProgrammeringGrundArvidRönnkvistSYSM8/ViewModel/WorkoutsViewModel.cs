@@ -95,7 +95,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         }
         private void SortByDuration(object obj)
         {
-            if (User.ActiveUser != null)
+            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
             {
                 if (isAscending)
                 {
@@ -121,7 +121,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void SortByWorkoutType(object obj)
         {
-            if (User.ActiveUser != null)
+            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
             {
                 if (isAscending)
                 {
@@ -145,7 +145,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         private void GetSortByDate(object obj)
         {
-            if (User.ActiveUser != null)
+            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
             {
                 if (isAscending)
                 {
@@ -299,9 +299,16 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         }
         public void UserEdit(object parameter)
         {
-            var userDetailsWindow = new UserDetailsWindow();
-            userDetailsWindow.Show();
-            CloseAction?.Invoke(); // Close the current window
+            if (User.ActiveUser.Username == "admin")
+            {
+                MessageBox.Show("Du kan inte redigera admin", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                var userDetailsWindow = new UserDetailsWindow();
+                userDetailsWindow.Show();
+                CloseAction?.Invoke(); // Close the current window
+            }
         }
     }
 }
