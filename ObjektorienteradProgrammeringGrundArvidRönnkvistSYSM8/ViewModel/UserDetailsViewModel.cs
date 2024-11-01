@@ -28,6 +28,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private string securityQuestion = User.ActiveUser.SecurityQuestion;
         private string securityAnswer = User.ActiveUser.SecurityAnswer;
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Username
         {
             get => username;
@@ -41,6 +42,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Password
         {
             get => password;
@@ -53,6 +55,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 }
             }
         }
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string ConfirmPassword
         {
             get => confirmPassword;
@@ -66,6 +70,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Country
         {
             get => country;
@@ -79,6 +84,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string SecurityQuestion
         {
             get => securityQuestion;
@@ -92,6 +98,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string SecurityAnswer
         {
             get => securityAnswer;
@@ -105,9 +112,11 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand SaveChanges { get; }
         public ICommand Cancel {  get; }
 
+        //Konstruktor
         public UserDetailsViewModel()
         {
             SaveChanges = new RelayCommand(SaveUserChanges);
@@ -187,6 +196,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //Metod för att se om lösenordet innehåller specialtecken
         private bool HasSpecialCharacter(string password)
         {
             // Define special characters. You can modify this set as needed.
@@ -194,6 +204,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             return password.Any(c => specialCharacters.Contains(c));
         }
 
+        //Uppdaterar nya värdena
         private void SaveUserDetails(object parameter)
         {
             // Update the properties directly on the existing ActiveUser instance
@@ -208,6 +219,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 "User Created", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        //Metod för att återgå till tidigare fönster
         private void CancelCommand(object parameter)
         {
 

@@ -14,6 +14,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class AddWorkoutViewModel : ViewModelBase
     {
+        //Properties
         public Action CloseAction { get; set; }
         private DateTime Date = DateTime.Now;
         private string workoutType;
@@ -22,9 +23,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         private string notes = "";
         
         private int repDis;    //Repetitions / Distance beroende på om användaren vill logga ett fys eller styrkepass
-          
-        
 
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string WorkoutType
         {
             get => workoutType;
@@ -34,7 +35,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(WorkoutType));
             }
         }
-
+        
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public TimeSpan Duration
         {
             get => duration;
@@ -44,6 +46,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Duration));
             }
         }
+        
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
 
         public string Notes
         {
@@ -54,6 +58,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Notes));
             }
         }
+        
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public int Calories
         {
             get => calories;
@@ -64,6 +70,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public int RepDis
         {
             get => repDis;
@@ -74,14 +81,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
-        
 
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand WorkoutAdd { get; }
         public ICommand Return { get; }
 
         //Workoutproperty to store the result
         public Workout Workout { get; private set; }
     
+        //Konstruktor
         public AddWorkoutViewModel()
         {
             WorkoutAdd = new RelayCommand(AddWorkout);
@@ -90,9 +98,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         }
         public event Action<Workout> WorkoutAdded;
         
+        //Metod för att lägga till träningspass för användaren
         public void AddWorkout(object parameter)
         {
-            
+            //Felhantering för fel typ av användarinmatning
             if (string.IsNullOrWhiteSpace(workoutType)) //If no workout type is selected
             {
                 return;
@@ -111,7 +120,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 return;
             }
 
-            if (RepDis <= 0)
+            if (RepDis <= 0)    //Repetition och Distans kan inte vara mindre än 0
             {
                 if (WorkoutType == "Strength")
                 {
@@ -125,15 +134,17 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
 
             Workout workout;
-
-            if (workoutType == "Strength")
+            
+            //Om inmatningen är godkänd går vi vidare till att lägga till passet
+            
+            if (workoutType == "Strength")  //Om det är styrkepass 
             {
                 workout = new StrengthWorkout(Date, WorkoutType, Duration, 0, Notes, RepDis);
                 workout.CaloriesBurned = workout.CalculateCaloriesBurned();
                 Calories = workout.CaloriesBurned;
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories} Repetitions: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else if (workoutType == "Cardio")
+            else if (workoutType == "Cardio")   //Om det är fyspass
             {
                 
                 workout = new CardioWorkout(Date, WorkoutType, Duration, 0, Notes, RepDis);
@@ -141,7 +152,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 Calories = workout.CaloriesBurned;
                 MessageBox.Show($"Workout type: {WorkoutType}. Workout duration: {Duration}. Calories burned: {Calories}. Distance: {RepDis}. Notes: {Notes}", "Workout added!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            else   //Om inget träningspass är valt
             {
                 MessageBox.Show("No workouttype found", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -153,22 +164,22 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 User.ActiveUser.Workouts.Add(workout); // Add workout to active user's list
                 WorkoutAdded?.Invoke(workout);  //Notify that the workout was created
             }
-            else
+            else  //Om ingen användare hittas
             {
                 MessageBox.Show("No active user found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }           
-            ClearFields();
+            ClearFields();  //Om ett pass läggs till rensar vi fälten för inmatning
         }
 
-        public void ReturnToPrevios(object parameter)
+        public void ReturnToPrevios(object parameter)   //Återgå till tidigare fönster
         {
             var workoutsWindow = new WorkoutsWindow(); //Creating an instance of WorkoutsWindow
             workoutsWindow.Show();
             CloseAction?.Invoke(); // Close the current window
         }
 
-        private void ClearFields()
+        private void ClearFields()  //Rensar fälten
         {
             WorkoutType = string.Empty;
             Duration = TimeSpan.Zero;            

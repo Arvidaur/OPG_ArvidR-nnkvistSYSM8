@@ -27,16 +27,9 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.WorkoutFo
             this.Notes = Notes;
             this.RepDis = RepDis;
         }
-        //Contructor utan notes då jag vill att det ska vara frivilligt
-        public Workout(DateTime Date, string TypeOfWorkOut, TimeSpan Duration, int CaloriesBurned)
-        {
-            this.Date = Date;
-            this.TypeOfWorkOut = TypeOfWorkOut;
-            this.Duration = Duration;
-            this.CaloriesBurned = CaloriesBurned;
-        }
+        
 
-        //Method
+        //Metod för att kalkylera hur många kalorier som bränns
         public abstract int CalculateCaloriesBurned();
 
     }

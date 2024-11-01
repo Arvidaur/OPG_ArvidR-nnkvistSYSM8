@@ -16,9 +16,12 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class WorkoutDetailsViewModel : ViewModelBase
     {
+        //Properties
         public Action CloseAction { get; set; }
         private bool IsCopy = false;
         private bool _isEditing;
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public bool IsEditing
         {
             get => _isEditing;
@@ -28,6 +31,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(IsEditing));
             }
         }
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private Workout _selectedWorkout;
         public Workout SelectedWorkout
         {
@@ -38,7 +43,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(SelectedWorkout));
             }
         }
-        
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private DateTime _date;
         public DateTime Date
         {
@@ -49,7 +55,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Date));
             }
         }
- 
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private string _workoutType;
         public string WorkoutType
         {
@@ -61,6 +68,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private TimeSpan _duration;
         public TimeSpan Duration
         {
@@ -71,7 +79,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Duration));
             }
         }
-  
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private int _caloriesBurned;
         public int Calories
         {
@@ -82,6 +91,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Calories));
             }
         }
+        
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
 
         private string _notes;
         public string Notes
@@ -94,6 +105,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         private int _repDis;
         public int RepDis
         {
@@ -105,11 +117,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand EditWorkout { get; }
         public ICommand SaveWorkout { get; }
         public ICommand Return { get; }
         public ICommand CopyWorkout { get; }
 
+        //Konstruktor
         public WorkoutDetailsViewModel(Workout selectedWorkout)
         {
             //Standardvärden ska vara det valda passet
@@ -131,6 +145,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             
         }
 
+        //Metod som kopierar träningspasset så man kan använda det som mall för ett nytt
         private void CopySelectedWorkout(object obj)
         {
             IsCopy = true;  //När användaren sparar passet så sparas det som en kopia
@@ -148,6 +163,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             MessageBox.Show("Kopia har skapats" , "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        //Metod för att återgå till tidigare fönster
         private void ReturnToPreviusPage(object obj)
         {
             var workoutsWindow = new WorkoutsWindow(); //Creating an instance of WorkoutsWindow
@@ -155,6 +171,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             CloseAction?.Invoke(); // Close the current window
         }
 
+        //Metod för att spara träningspasset
         private void WorkoutSave(object obj)
         {
                 SelectedWorkout.TypeOfWorkOut = WorkoutType;
@@ -200,16 +217,18 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
 
 
-            IsEditing = false;
+            IsEditing = false;  //När passet sparats avaktiverar vi så det inte går att redigera pass för nästa gång man vill redigera ett pass
 
             OnPropertyChanged(nameof(SelectedWorkout));
             MessageBox.Show("Ändringarna har sparats!", "Success!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
+            //Återgår till tidigare fönster
             var workoutsWindow = new WorkoutsWindow(); //Går tillbaka till WorkoutsWindow
             workoutsWindow.Show();
             CloseAction?.Invoke(); // Close the current window
         }
 
+        //Metod som låser upp fälten för redigering 
         private void WorkoutEdit(object obj)
         {
             IsEditing = true;

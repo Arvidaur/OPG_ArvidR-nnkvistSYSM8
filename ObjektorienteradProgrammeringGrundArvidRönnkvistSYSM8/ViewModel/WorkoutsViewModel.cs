@@ -22,6 +22,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
         public Action CloseAction { get; set; }
         private string _welcomeMessage;
+
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string WelcomeMessage
         {
             get => _welcomeMessage;
@@ -52,6 +54,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Selected));
             }
         }
+
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand AddWorkout { get; }
         public ICommand RemoveWorkout { get; }
         public ICommand DetailsWorkout { get; }
@@ -62,7 +66,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public ICommand SortWorkoutType { get; }
         public ICommand SortDuration { get; }
 
-
+        //Konstruktor 
         public WorkoutsViewModel()
         {
             Workouts = new ObservableCollection<Workout>();
@@ -79,8 +83,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
             Workouts.CollectionChanged += Workouts_CollectionChanged; // Subscribe to changes
 
-            OnUserLogin();
+            OnUserLogin(); 
         }
+
+        // Hanterar ändringar i en samling av träningspass genom att utföra åtgärder när ett pass läggs till eller tas bort.
         private void Workouts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // Perform additional actions based on the type of change (e.g., item added or removed)
@@ -93,36 +99,84 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 // Handle removing logic
             }
         }
+
+        //Sorterar träningspass efter varaktighet
         private void SortByDuration(object obj)
         {
-            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            if (User.ActiveUser.Username == "admin")
             {
+                // Gather all workouts from all users into a single list
+                var allWorkouts = User.Users.SelectMany(user => user.Workouts).ToList();
+
+                // Sort the allWorkouts list directly for admin
                 if (isAscending)
                 {
-                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Duration).ToList();  //Sorterar listan baserat på hur länge passet varade
+                    allWorkouts = allWorkouts.OrderBy(workout => workout.Duration).ToList();
+                }
+                else
+                {
+                    allWorkouts = allWorkouts.OrderByDescending(workout => workout.Duration).ToList();
+                }
+
+                // Update the UI list with sorted workouts without modifying User.ActiveUser.Workouts
+                Workouts.Clear();
+                foreach (var workout in allWorkouts)
+                {
+                    Workouts.Add(workout);
+                }
+            }
+            else if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            {
+                // Sort only the active user's workouts by TypeOfWorkOut
+                if (isAscending)
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Duration).ToList();
                 }
                 else
                 {
                     User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.Duration).ToList();
                 }
 
+                // Update the UI list with sorted workouts
                 Workouts.Clear();
                 foreach (var workout in User.ActiveUser.Workouts)
                 {
-
                     Workouts.Add(workout);
                 }
-                
-                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
             }
+
+            // Toggle isAscending each time the button is clicked
+            isAscending = !isAscending;
         }
 
-       
-
+        //Sorterar träningspass efter träningstyp
         private void SortByWorkoutType(object obj)
         {
-            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            if (User.ActiveUser.Username == "admin")
             {
+                // Gather all workouts from all users into a single list
+                var allWorkouts = User.Users.SelectMany(user => user.Workouts).ToList();
+
+                // Sort the allWorkouts list directly for admin
+                if (isAscending)
+                {
+                    allWorkouts = allWorkouts.OrderBy(workout => workout.TypeOfWorkOut).ToList();
+                }
+                else
+                {
+                    allWorkouts = allWorkouts.OrderByDescending(workout => workout.TypeOfWorkOut).ToList();
+                }
+
+                // Update the UI list with sorted workouts without modifying User.ActiveUser.Workouts
+                Workouts.Clear();
+                foreach (var workout in allWorkouts)
+                {
+                    Workouts.Add(workout);
+                }
+            }
+            else if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            {
+                // Sort only the active user's workouts by TypeOfWorkOut
                 if (isAscending)
                 {
                     User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.TypeOfWorkOut).ToList();
@@ -132,39 +186,66 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                     User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.TypeOfWorkOut).ToList();
                 }
 
+                // Update the UI list with sorted workouts
                 Workouts.Clear();
                 foreach (var workout in User.ActiveUser.Workouts)
                 {
-
                     Workouts.Add(workout);
                 }
-
-                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
             }
+
+            // Toggle isAscending each time the button is clicked
+            isAscending = !isAscending;
         }
 
+
+        //Sorterar träningspass efter datum
         private void GetSortByDate(object obj)
         {
-            if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            if (User.ActiveUser.Username == "admin")
             {
+                // Gather all workouts from all users into a single list
+                var allWorkouts = User.Users.SelectMany(user => user.Workouts).ToList();
+
+                // Sort the allWorkouts list directly for admin
                 if (isAscending)
                 {
-                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Date).ToList();  
+                    allWorkouts = allWorkouts.OrderBy(workout => workout.Date).ToList();
+                }
+                else
+                {
+                    allWorkouts = allWorkouts.OrderByDescending(workout => workout.Date).ToList();
+                }
+
+                // Update the UI list with sorted workouts without modifying User.ActiveUser.Workouts
+                Workouts.Clear();
+                foreach (var workout in allWorkouts)
+                {
+                    Workouts.Add(workout);
+                }
+            }
+            else if (User.ActiveUser != null && User.ActiveUser.Username != "admin")
+            {
+                // Sort only the active user's workouts by TypeOfWorkOut
+                if (isAscending)
+                {
+                    User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderBy(workout => workout.Date).ToList();
                 }
                 else
                 {
                     User.ActiveUser.Workouts = User.ActiveUser.Workouts.OrderByDescending(workout => workout.Date).ToList();
                 }
 
+                // Update the UI list with sorted workouts
                 Workouts.Clear();
                 foreach (var workout in User.ActiveUser.Workouts)
                 {
-
                     Workouts.Add(workout);
                 }
-
-                isAscending = !isAscending; //Skiftar varje gång användaren använder knappen
             }
+
+            // Toggle isAscending each time the button is clicked
+            isAscending = !isAscending;
         }
 
         private void ShowInfoMessage(object obj)    //Visar ett infofönster
@@ -176,6 +257,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 "Information", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
+        //Metod för utloggning av användare
         private void LogoutUser(object obj)
         {
             //AdminUser.IsAdmin = false;    //Admin ska vara false vare sig det var en admin som var inloggad eller inte 
@@ -186,6 +268,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             CloseAction?.Invoke(); // Close the current window
         }  
 
+        //Metod för att öppna workout add fönster
         public void WorkoutAdd(object parameter)
         {
             if (User.ActiveUser.Username != "admin")
@@ -208,6 +291,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }           
         }
 
+        
         private void LoadUserWorkouts() // Method to load workouts for the active user, if admin will load all the workouts
         {
             //string username;
@@ -237,12 +321,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         }
 
         // Call LoadUserWorkouts after login success
-        public void OnUserLogin()
+        public void OnUserLogin()   //När användaren loggar in kallas denna metod 
         {
             LoadUserWorkouts();
             WelcomeMessage = $"Välkommen {User.ActiveUser.Username}!";
         }
 
+        //Metod för att ta bort valt träningspass
         public void WorkoutRemove(object parameter)
         {
             if (Selected != null)
@@ -284,6 +369,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //Metod för att öppna fönster med detaljerad vy av träningspass
         public void WorkoutDetails(object parameter)
         {
             if (Selected != null)
@@ -297,6 +383,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 MessageBox.Show("Välj ett träningspass att se information om", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
+
+        //Metod för att öppna fönster för att redigera användare
         public void UserEdit(object parameter)
         {
             if (User.ActiveUser.Username == "admin")

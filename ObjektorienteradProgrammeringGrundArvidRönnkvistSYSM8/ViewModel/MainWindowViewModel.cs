@@ -19,11 +19,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        //Properties
         public Action CloseAction { get; set; }
         private static bool BaseUserCreated = false;
         private string _username;
         private string _password;
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Username
         {
             get => _username;
@@ -34,6 +36,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Password
         {
             get => _password;
@@ -44,10 +47,12 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand LoginCommand { get; }
         public ICommand ForgotPasswordCommand { get; }
         public ICommand RegisterNewCommand { get; }
 
+        //Konstruktor
         public MainWindowViewModel()
         {
 
@@ -104,7 +109,6 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         //Method when uses tries to log into the app, checks if a user with username and password exists and logs in if true
         private void Login(object parameter)
         {
-            bool isAdmin;
             bool isValidUser;
             
             try
@@ -127,10 +131,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
             
 
-            if (isValidUser)
+            if (isValidUser)    //Om anvädaren är valid 
             {
-                var user = User.Users.First(user => user.Username == Username && user.Password == Password);
-                User.ActiveUser = user;
+                var user = User.Users.First(user => user.Username == Username && user.Password == Password);    
+                User.ActiveUser = user; //Settar användaren som loggar in till active user
 
                 var workoutsViewModel = new WorkoutsViewModel();
                 workoutsViewModel.OnUserLogin(); // Set the log in message
@@ -145,7 +149,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
-
+        //Öppnar fönstret för att återställa lösenord
         private void ForgotPassword(object parameter)
         {
             var forgottenPasswordWindow = new ForgottenPasswordWindow(); //Creating an instance of UserDetailWindow
@@ -153,6 +157,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             CloseAction?.Invoke(); // Close the current window
         }
 
+        //Öppnar fönster för att registrera ny användare
         private void Register(object parameter)
         {
             var registerWindow = new Register(); //Creating an instance of UserDetailWindow

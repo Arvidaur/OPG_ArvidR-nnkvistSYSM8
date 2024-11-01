@@ -19,11 +19,10 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.Model.PersonFol
 
         }
 
-        //Method
+        //Method. Används inte var med i klassdiagrammet
         public static void ManageAllWorkouts()
         {
 
-        }
-        
+        }        
     }
 }

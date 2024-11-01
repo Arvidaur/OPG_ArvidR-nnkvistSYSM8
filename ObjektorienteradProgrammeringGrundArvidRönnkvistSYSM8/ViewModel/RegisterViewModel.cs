@@ -14,6 +14,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 {
     internal class RegisterViewModel : ViewModelBase
     {
+        //Properties
         public Action CloseAction { get; set; }
 
         private string username, password, confirmPassword, country, securityQuestion, securityAnswer;
@@ -21,6 +22,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
         public static List<Workout> Workouts = new List<Workout>();
 
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Username
         {
             get => username;
@@ -31,6 +33,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Password
         {
             get => password;
@@ -40,6 +43,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Password));
             }
         }
+        
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string ConfirmPassword
         {
             get => confirmPassword;
@@ -50,6 +55,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string Country
         {
             get => country;
@@ -59,7 +65,8 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 OnPropertyChanged(nameof(Country));
             }
         }
-
+       
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string SecurityQuestion
         {
             get => securityQuestion;
@@ -70,6 +77,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //utlöser OnPropertyChanged vid värdeändring för att uppdatera UI.
         public string SecurityAnswer
         {
             get => securityAnswer;
@@ -80,10 +88,13 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        // ICommand-egenskaper för att hantera kommandon
         public ICommand CreateUser { get; }
         public ICommand Cancel { get; }
 
-        public event EventHandler CloseRequested;
+       
+
+        //Konstruktor
         public RegisterViewModel()
         {
             CreateUser = new RelayCommand(createUser);
@@ -92,7 +103,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
 
 
 
-
+        //Metod där vi skapar en användare baserad på inmatning
         private void createUser(object parameter)   //Först kollar vi om all inmatning är korrekt och om den är det så skapar vi ett object av user med inmatningen från användaren
         {
             bool userExists = User.Users.Any(user => user.Username == Username);            
@@ -163,12 +174,15 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
             }
         }
 
+        //Returnerar true om lösenordet innehåller ett specialtecken
         private bool HasSpecialCharacter(string password)
         {
             // Define special characters. You can modify this set as needed.
             string specialCharacters = "!@#$%^&*()_+-=[]{}|;':\",.<>?/";
             return password.Any(c => specialCharacters.Contains(c));
         }
+
+        //Metod som skapar en ny användare med inmatningen användaren matat in
         private void SaveUserDetails(object parameter)
         {
            
@@ -180,6 +194,7 @@ namespace ObjektorienteradProgrammeringGrundArvidRönnkvistSYSM8.ViewModel
                 "User Created", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        //Metod för att återgå till tidigare fönster
         private void CancelCommand(object parameter)
         {
             var mainWindow = new MainWindow(); //Creating an instance of UserDetailWindow
